@@ -13,6 +13,6 @@ app.get('/', (req, res) => {
     .json({ status: true, message: 'Welcome to Chocboy Index Page' });
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log(`Server now live at port ${PORT}`);
 });
