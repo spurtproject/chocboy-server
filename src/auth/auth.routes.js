@@ -1,7 +1,15 @@
 const { Router } = require('express');
-const { register, login } = require('./auth.controllers');
+const {
+  register,
+  login,
+  forgotPassword,
+  confirmOTP,
+  changePassword,
+  updatePassword,
+} = require('./auth.controllers');
 const { checkEmail } = require('../helpers/checkEmail');
 const { registerValidator, loginValidator } = require('../helpers/validate');
+const { userAuthentication } = require('../helpers/auth');
 const passport = require('passport');
 const router = Router();
 
@@ -14,5 +22,13 @@ router.post(
 );
 
 router.post('/login', loginValidator, login);
+
+router.put('/password/forgot', forgotPassword);
+
+router.post('/confirm/otp', userAuthentication, confirmOTP);
+
+router.put('/change/password', userAuthentication, changePassword);
+
+router.patch('/update/password', userAuthentication, updatePassword);
 
 module.exports = router;

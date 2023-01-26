@@ -13,6 +13,9 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    userPin: {
+      type: Number,
+    },
     password: {
       type: String,
       trim: true,

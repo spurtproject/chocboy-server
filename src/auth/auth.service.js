@@ -2,7 +2,6 @@ const localStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const User = require('./user.model');
-const moment = require('moment');
 
 module.exports = (passport) => {
   passport.use(
@@ -21,7 +20,8 @@ module.exports = (passport) => {
           const hashedPassword = await bcrypt.hash(password, 10);
           data.password = hashedPassword;
           data.name = req.body.name;
-          console.log(data);
+          const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
+          data.userPin = code;
           const user = await User.create(data);
 
           return done(null, user);
