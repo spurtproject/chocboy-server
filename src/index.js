@@ -11,7 +11,7 @@ require('./auth/auth.service')(passport);
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-app.use('/api/', require('./routes/routes'));
+app.use('/api', require('./routes/routes'));
 
 app.get('/', (req, res) => {
   res

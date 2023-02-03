@@ -18,6 +18,7 @@ const userSchema = new Schema(
     },
     photo: {
       type: String,
+      trim: true,
     },
     password: {
       type: String,
