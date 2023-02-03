@@ -9,4 +9,10 @@ router.use(
   require('../products/product.routes')
 );
 
+router.use(
+  '/category',
+  userAuthentication,
+  require('../categories/category.routes')
+);
+
 module.exports = router;
