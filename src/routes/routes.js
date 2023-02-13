@@ -5,13 +5,13 @@ const router = Router();
 router.use('/auth', require('../auth/auth.routes'));
 router.use(
   '/product',
-  userAuthentication,
+  // userAuthentication,
   require('../products/product.routes')
 );
 
 router.use(
   '/category',
-  userAuthentication,
+  // userAuthentication,
   require('../categories/category.routes')
 );
 

@@ -33,4 +33,56 @@ const authValidate = async (req, res, next) => {
   }
 };
 
-module.exports = { authValidate };
+const productSchema = Joi.object({
+  productName: Joi.string()
+    .min(3)
+    .max(30)
+    .required()
+    .trim()
+    .error(
+      new ApiError(
+        400,
+        'Kindly input the name of product in the appropriate format...'
+      )
+    ),
+  category: Joi.string()
+    .trim()
+    .required()
+    .error(
+      new ApiError(
+        400,
+        'Oops! A product must belong in atleast one category...'
+      )
+    ),
+  description: Joi.string()
+    .min(3)
+    .optional()
+    .error(
+      new ApiError(400, 'Kindly input detailed description of this product')
+    ),
+
+  quantity: Joi.number()
+    .optional()
+    .error(
+      new ApiError(400, 'Kindly indicate how many of this product is available')
+    ),
+
+  price: Joi.number()
+    .integer()
+    .optional()
+    .error(
+      new ApiError(400, 'Kindly input a valid integer as price of product')
+    ),
+});
+
+const productValidator = async (req, res, next) => {
+  const data = req.body;
+  try {
+    await productSchema.validateAsync(data);
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { authValidate, productValidator };

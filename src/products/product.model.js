@@ -5,13 +5,17 @@ const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
 const productSchema = new Schema({
-  id: ObjectId,
-  title: {
+  productName: {
     type: String,
     trim: true,
     required: true,
   },
-  thumbNail: {
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true,
+  },
+  productImage: {
     type: String,
     trim: true,
   },
@@ -20,7 +24,11 @@ const productSchema = new Schema({
     type: String,
     trim: true,
   },
-  amount: {
+  quantity: {
+    type: String,
+    trim: true,
+  },
+  price: {
     type: Number,
     trim: true,
   },
