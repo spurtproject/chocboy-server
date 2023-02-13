@@ -20,10 +20,37 @@ module.exports = (passport) => {
           const hashedPassword = await bcrypt.hash(password, 10);
           data.password = hashedPassword;
           data.name = req.body.name;
+          data.userRole = 'user';
           const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
           data.userPin = code;
           const user = await User.create(data);
-
+          return done(null, user);
+        } catch (err) {
+          done(err);
+        }
+      }
+    )
+  );
+  passport.use(
+    'admin',
+    new localStrategy(
+      {
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true,
+      },
+      async (req, email, password, done) => {
+        try {
+          let data = {};
+          const transformedMail = email.toLowerCase();
+          data.email = transformedMail;
+          const hashedPassword = await bcrypt.hash(password, 10);
+          data.password = hashedPassword;
+          data.name = req.body.name;
+          const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
+          data.userPin = code;
+          data.userRole = 'admin';
+          const user = await User.create(data);
           return done(null, user);
         } catch (err) {
           done(err);

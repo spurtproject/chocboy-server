@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { getEnumsArray, USER_ROLE } = require('../helpers/enums');
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -15,6 +16,10 @@ const userSchema = new Schema(
     },
     userPin: {
       type: Number,
+    },
+    userRole: {
+      type: String,
+      enums: [getEnumsArray(USER_ROLE)],
     },
     photo: {
       type: String,

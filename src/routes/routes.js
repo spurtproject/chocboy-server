@@ -5,7 +5,7 @@ const router = Router();
 router.use('/auth', require('../auth/auth.routes'));
 router.use(
   '/product',
-  // userAuthentication,
+  userAuthentication,
   require('../products/product.routes')
 );
 

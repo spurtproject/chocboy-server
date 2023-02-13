@@ -17,4 +17,20 @@ const createProduct = catchAsync(async (req, res) => {
     .json({ status: true, message: 'Product now created...', product });
 });
 
-module.exports = { createProduct };
+const getProduct = catchAsync(async (req, res) => {
+  const data = await productService.getProduct(req.params._id);
+  res.status(201).json({
+    status: true,
+    message: `Product ${req.params._id} successfully retrieved...`,
+    data,
+  });
+});
+
+const getProducts = catchAsync(async (req, res) => {
+  const data = await productService.getProducts();
+  res
+    .status(201)
+    .json({ status: true, message: 'All products now retrieved...', data });
+});
+
+module.exports = { createProduct, getProduct, getProducts };

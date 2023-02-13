@@ -29,17 +29,16 @@ const userAuthentication = (req, res, next) => {
   // console.log(bearer[1]);
 };
 
-// const authorAuthorization = async (req, res, next) => {
-//   const { author } = await Post.findById(req.params.id);
-//   if (!req.user || req.user._id != author) {
-//     res.status(200).json({
-//       status: 'access denied',
-//       message:
-//         'Ooppss! Only the author of a twit is allowed to perform this action...',
-//     });
-//     return;
-//   }
-//   next();
-// };
+const adminAuthorization = async (req, res, next) => {
+  if (!req.user || req.user.userRole !== 'admin') {
+    res.status(403).json({
+      status: 'access denied',
+      message:
+        'Ooppss! Only admins are permitted to perform this action or view this resource...',
+    });
+    return;
+  }
+  next();
+};
 
-module.exports = { userAuthentication };
+module.exports = { userAuthentication, adminAuthorization };

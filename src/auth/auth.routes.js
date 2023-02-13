@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const {
   register,
+  registerAdmin,
   login,
   forgotPassword,
   confirmOTP,
@@ -22,6 +23,14 @@ router.post(
   checkEmail,
   passport.authenticate('user', { session: false }),
   register
+);
+
+router.post(
+  '/admin/register',
+  authValidate,
+  checkEmail,
+  passport.authenticate('admin', { session: false }),
+  registerAdmin
 );
 
 router.post('/login', loginValidator, login);
