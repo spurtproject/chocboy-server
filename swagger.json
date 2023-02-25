@@ -1,0 +1,16 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Documentation for Chocboy Server.",
+    "description": "The official server-side application for Chocboy - The sporting app that simply brings people with similar sport interests other related events together.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+
+  "definitions": {}
+}

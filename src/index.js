@@ -1,6 +1,8 @@
 const express = require('express');
 const { json, urlencoded } = express;
 require('dotenv').config();
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 const passport = require('passport');
 const app = express();
 const { PORT } = require('./config/keys');
@@ -9,6 +11,7 @@ const logger = require('./helpers/logger');
 const { errorConverter, errorHandler } = require('./helpers/asyncError');
 require('./auth/auth.service')(passport);
 app.use(json());
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(urlencoded({ extended: true }));
 
 app.use('/api', require('./routes/routes'));
