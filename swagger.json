@@ -12,5 +12,119 @@
   "host": "localhost:3000",
   "basePath": "/",
 
-  "definitions": {}
+  "definitions": {
+    "CreateUser": {
+      "required": ["name", "email", "password"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+
+    "UserLoginResponse": {
+      "properties": {
+        "msg": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+
+        "thumbNail": {
+          "type": "string"
+        },
+        "pin": {
+          "type": "number"
+        }
+      },
+
+      "schemes": ["http"],
+      "consumes": ["application/json"],
+      "produces": ["application/json"]
+    },
+    "UserLogin": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "This endpoint creates a user",
+        "tags": ["Create User"],
+        "description": "This endpoint creates a user",
+        "parameters": [
+          {
+            "name": "The full name of the user",
+            "email": "The email address of the user",
+            "password": "The password which later gets hashed by the application.",
+            "schema": {
+              "$ref": "#/definitions/CreateUser"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Returns information of user as saved in the database",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "This endpoint logs an already created user onto the platform",
+        "tags": ["User Login"],
+        "description": "This endpoint logs an already created user into the platform",
+        "parameters": [
+          {
+            "in": "body",
+            "email": "The email address of the user",
+            "name": "The username of the user",
+            "password": "The password which later gets hashed by the application.",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "It returns details of the user logged on to the platform",
+            "msg": "Login successful",
+            "schema": {
+              "$ref": "#/definitions/UserLoginResponse"
+            }
+          }
+        }
+      }
+    }
+  }
 }

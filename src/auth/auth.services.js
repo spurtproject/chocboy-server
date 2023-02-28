@@ -27,7 +27,6 @@ const confirmOTP = (userPin, data) => {
 
 const changePassword = async (user, data) => {
   let hashedPassword = await bcrypt.hash(data, 10);
-  console.log(hashedPassword);
   return await User.findOneAndUpdate(
     { email: user },
     { password: hashedPassword },

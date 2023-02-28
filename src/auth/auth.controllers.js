@@ -48,6 +48,7 @@ const login = catchAsync((req, res, next) => {
           _id: user._id,
           email: user.email,
           name: user.name,
+          userRole: user.userRole,
         };
         const token = await tokenService.generateAuthTokens(data);
 

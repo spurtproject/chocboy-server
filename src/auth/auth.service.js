@@ -77,6 +77,7 @@ module.exports = (passport) => {
             });
           }
           const userData = JSON.parse(JSON.stringify(user));
+          console.log(userData);
           return done(null, userData, { message: 'Login Successful' });
         } catch (err) {
           return done(err);
