@@ -15,4 +15,6 @@ router.use(
   require('../categories/category.routes')
 );
 
+router.use('/order', userAuthentication, require('../orders/order.routes'));
+
 module.exports = router;
