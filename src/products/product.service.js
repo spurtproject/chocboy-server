@@ -25,4 +25,28 @@ const getProducts = async () => {
   }
 };
 
-module.exports = { createProduct, getProduct, getProducts };
+const updateProduct = async (productId, data) => {
+  try {
+    return await Product.findByIdAndUpdate(productId, data, {
+      new: true,
+    });
+  } catch (error) {
+    throw new ApiError(400, 'Unable to update this product...');
+  }
+};
+
+const deleteProduct = async (id) => {
+  try {
+    return await Product.findByIdAndDelete(id);
+  } catch (error) {
+    throw new ApiError(400, 'Unable to delete product...');
+  }
+};
+
+module.exports = {
+  createProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+  deleteProduct,
+};

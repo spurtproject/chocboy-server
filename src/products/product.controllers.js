@@ -33,4 +33,36 @@ const getProducts = catchAsync(async (req, res) => {
     .json({ status: true, message: 'All products now retrieved...', data });
 });
 
-module.exports = { createProduct, getProduct, getProducts };
+const editProduct = catchAsync(async (req, res) => {
+  const updatedBody = req.body;
+  if (req.file) {
+    const avatar = await cloudinary.uploader.upload(req.file.path);
+    updatedBody.productImage = avatar.secure_url;
+  }
+  const data = await productService.updateProduct(
+    req.query.productId,
+    updatedBody
+  );
+  res.status(201).json({
+    status: 'success',
+    message: `Product with the id ${req.query.productId} was successfully updated...`,
+    data,
+  });
+});
+
+const deleteProduct = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  await productService.deleteProduct(id);
+  res.status(200).json({
+    status: true,
+    message: `The product with the id ${req.params.id} was just deleted...`,
+  });
+});
+
+module.exports = {
+  createProduct,
+  getProduct,
+  getProducts,
+  editProduct,
+  deleteProduct,
+};
