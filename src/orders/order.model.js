@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-  userId: {
+  customer: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     trim: true,
@@ -29,7 +29,7 @@ const orderSchema = new Schema({
       product: {
         type: String,
       },
-      quantity: {
+      choiceQuantity: {
         type: Number,
       },
       unitPrice: {

@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 
 const transactionSchema = new Schema(
   {
-    userId: {
+    customer: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
@@ -16,6 +16,10 @@ const transactionSchema = new Schema(
       type: String,
       required: true,
       enum: [...getEnumsArray(TRANSACTION_STATUS)],
+    },
+    transactionRef: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true }
