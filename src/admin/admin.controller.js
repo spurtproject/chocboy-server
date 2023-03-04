@@ -9,7 +9,6 @@ const getCurrentUser = catchAsync(async (req, res) => {
   } else {
     user = await adminService.getUserById(req.user._id);
   }
-  console.log(user);
 
   res
     .status(200)
