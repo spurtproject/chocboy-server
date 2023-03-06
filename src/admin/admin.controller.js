@@ -15,4 +15,13 @@ const getCurrentUser = catchAsync(async (req, res) => {
     .json({ status: true, message: 'User now retrieved... ', user });
 });
 
-module.exports = { getCurrentUser };
+const getUsers = catchAsync(async (req, res) => {
+  const data = await adminService.getUsers(req.query);
+
+  res.status(201).json({
+    status: 'success',
+    message: "All users' info now retrieved... ",
+    data,
+  });
+});
+module.exports = { getCurrentUser, getUsers };

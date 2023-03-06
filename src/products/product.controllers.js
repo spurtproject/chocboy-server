@@ -9,6 +9,7 @@ const createProduct = catchAsync(async (req, res) => {
   if (req.file) {
     const avatar = await cloudinary.uploader.upload(req.file.path);
     data.productImage = avatar.secure_url;
+    console.log(avatar);
   }
 
   const product = await productService.createProduct(data);

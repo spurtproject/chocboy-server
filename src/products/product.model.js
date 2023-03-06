@@ -25,8 +25,12 @@ const productSchema = new Schema({
     trim: true,
   },
   quantity: {
-    type: String,
+    type: Number,
     trim: true,
+  },
+  isCustomizable: {
+    type: Boolean,
+    default: false,
   },
   price: {
     type: Number,
