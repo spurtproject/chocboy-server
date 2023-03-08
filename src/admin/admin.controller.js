@@ -27,13 +27,20 @@ const getUsers = catchAsync(async (req, res) => {
 
 const getAdminStats = catchAsync(async (req, res) => {
   const data = await adminService.getAdminDashboardInfo();
-  res
-    .status(202)
-    .json({
-      status: true,
-      message: 'Admin dashboard stats now Retrieved...',
-      data,
-    });
+  res.status(202).json({
+    status: true,
+    message: 'Admin dashboard stats now Retrieved...',
+    data,
+  });
 });
 
-module.exports = { getCurrentUser, getUsers, getAdminStats };
+const getRevenueMetrics = catchAsync(async (req, res) => {
+  const data = await adminService.getRevenueMetrics();
+  res.status(200).json({
+    status: true,
+    message: 'Revenue Metric / Yearly Transaction Graph now retrieved...',
+    data,
+  });
+});
+
+module.exports = { getCurrentUser, getUsers, getAdminStats, getRevenueMetrics };

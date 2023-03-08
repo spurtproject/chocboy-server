@@ -3,6 +3,10 @@ const ApiError = require('../helpers/error');
 const Product = require('../products/product.model');
 const Order = require('../orders/order.model');
 const Transaction = require('../transactions/transaction.model');
+const {
+  buildCreditAggregationPipeline,
+  convertToMonthlyDataArray,
+} = require('../helpers/utils');
 
 const getUserById = async (id) => {
   try {
@@ -46,8 +50,23 @@ const getAdminDashboardInfo = async () => {
   return { numberOfProducts, numberOfOrders, totalSales };
 };
 
+const getRevenueMetrics = async () => {
+  const revenueFilter = { status: 'successful' };
+
+  let monthlyRevenue = await Transaction.aggregate(
+    await buildCreditAggregationPipeline(revenueFilter)
+  );
+  console.log(monthlyRevenue);
+  let monthlyTransactionGraph = await convertToMonthlyDataArray(
+    monthlyRevenue,
+    'totalAmount'
+  );
+  return monthlyTransactionGraph;
+};
+
 module.exports = {
   getUserById,
   getUsers,
   getAdminDashboardInfo,
+  getRevenueMetrics,
 };
