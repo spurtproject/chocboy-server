@@ -24,4 +24,13 @@ const getOrder = catchAsync(async (req, res) => {
     .json({ status: true, message: 'Order now retrieved...', data });
 });
 
-module.exports = { generateOrder, getOrder, getOrders };
+const addDeliveryInfo = catchAsync(async (req, res) => {
+  const data = await orderService.updateOrder(req.query.orderId, req.body);
+  res.status(201).json({
+    status: 'success',
+    message: 'Delivery Information now updated...',
+    data,
+  });
+});
+
+module.exports = { generateOrder, getOrder, getOrders, addDeliveryInfo };

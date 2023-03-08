@@ -24,4 +24,16 @@ const getUsers = catchAsync(async (req, res) => {
     data,
   });
 });
-module.exports = { getCurrentUser, getUsers };
+
+const getAdminStats = catchAsync(async (req, res) => {
+  const data = await adminService.getAdminDashboardInfo();
+  res
+    .status(202)
+    .json({
+      status: true,
+      message: 'Admin dashboard stats now Retrieved...',
+      data,
+    });
+});
+
+module.exports = { getCurrentUser, getUsers, getAdminStats };

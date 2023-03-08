@@ -1,8 +1,9 @@
 const { Router } = require('express');
 
 const router = Router();
-const { getUsers } = require('./admin.controller');
+const { getUsers, getAdminStats } = require('./admin.controller');
 
 router.get('/all/users', getUsers);
+router.get('/stats', getAdminStats);
 
 module.exports = router;

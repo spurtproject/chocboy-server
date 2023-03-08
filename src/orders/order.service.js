@@ -60,4 +60,12 @@ const getOrder = async (id) => {
   }
 };
 
-module.exports = { createOrder, getOrder, getOrders };
+const updateOrder = async (orderId, data) => {
+  try {
+    return await Order.findByIdAndUpdate(orderId, data, { new: true });
+  } catch (error) {
+    throw new ApiError(400, 'Unable to update order');
+  }
+};
+
+module.exports = { createOrder, getOrder, getOrders, updateOrder };
