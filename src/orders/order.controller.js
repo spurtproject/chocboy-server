@@ -2,13 +2,18 @@ const catchAsync = require('express-async-handler');
 const orderService = require('./order.service');
 
 const generateOrder = catchAsync(async (req, res) => {
-  const data = await orderService.createOrder(req.user, req.body);
+  const payStackRedirect = await orderService.createOrder(req.user, req.body);
+  console.log(payStackRedirect.data.data);
   // res.status(200).json({
   //   status: 'success',
   //   message: 'Order successfully generated...',
   //   data,
   // });
 });
+
+const verifyPaymentOrder = (req, res) => {
+  console.log(req.query);
+};
 
 const getOrders = catchAsync(async (req, res) => {
   const data = await orderService.getOrders(req.query);
@@ -33,4 +38,10 @@ const addDeliveryInfo = catchAsync(async (req, res) => {
   });
 });
 
-module.exports = { generateOrder, getOrder, getOrders, addDeliveryInfo };
+module.exports = {
+  generateOrder,
+  getOrder,
+  getOrders,
+  verifyPaymentOrder,
+  addDeliveryInfo,
+};

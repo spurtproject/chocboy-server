@@ -5,7 +5,6 @@ const { initiatePayment, verifyPayment } = require('../helpers/paystack');
 const ApiError = require('../helpers/error');
 
 const createOrder = async (user, data) => {
-  console.log(user);
   const totalPrice = await data.reduce((prev, curr) => {
     prev += curr.unitPrice * curr.choiceQuantity;
     return prev;
@@ -14,7 +13,6 @@ const createOrder = async (user, data) => {
     prev += curr.choiceQuantity;
     return prev;
   }, 0);
-  console.log(totalItems);
   const date = moment().format('L');
   const transactionData = {};
   transactionData.customer = user._id;
@@ -29,17 +27,14 @@ const createOrder = async (user, data) => {
   rawData.totalPrice = totalPrice;
   rawData.transactionId = transactionId;
   rawData.items = data;
+  const generateOrder = await Order.create(rawData);
   const payStackForm = {};
   payStackForm.amount = totalPrice * 100;
   payStackForm.email = user.email;
   payStackForm.metadata = {
     userId: user._id,
   };
-  console.log(payStackForm);
-  const payStackData = await initiatePayment(payStackForm);
-  console.log(payStackData);
-  // const generateOrder = await Order.create(rawData);
-  // return generateOrder;
+  return await initiatePayment(payStackForm);
 };
 
 const getOrders = async (criteria = {}) => {
