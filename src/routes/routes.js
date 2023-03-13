@@ -15,6 +15,8 @@ router.use('/order', userAuthentication, require('../orders/order.routes'));
 
 router.use('/user', userAuthentication, getCurrentUser);
 
+router.use('/location', require('../location/location.routes'));
+
 router.use(
   '/admin',
   userAuthentication,

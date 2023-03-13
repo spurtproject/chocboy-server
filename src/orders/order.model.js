@@ -48,6 +48,12 @@ const orderSchema = new Schema(
       type: String,
       trim: true,
     },
+    deliveryStatus: {
+      type: String,
+      trim: true,
+      default: 'pending',
+      enum: ['pending', 'shipping', 'delivered', 'cancelled'],
+    },
     items: [
       {
         product: {
