@@ -28,13 +28,49 @@ const createOrder = async (user, data) => {
   rawData.transactionId = transactionId;
   rawData.items = data;
   const generateOrder = await Order.create(rawData);
-  const payStackForm = {};
-  payStackForm.amount = totalPrice * 100;
-  payStackForm.email = user.email;
-  payStackForm.metadata = {
-    userId: user._id,
-  };
-  return await initiatePayment(payStackForm);
+  s;
+  return generateOrder;
+};
+
+const updateOrder = async (user, orderId, data) => {
+  try {
+    const { totalPrice, transactionId } = await Order.findById(orderId);
+    const netTotal = data.deliveryAmount + totalPrice;
+    const newTotal = { totalPrice: netTotal };
+    await Order.findByIdAndUpdate(orderId, { $set: newTotal }, { new: true });
+    await Order.findByIdAndUpdate(orderId, { $set: data }, { new: true });
+    const payStackForm = {};
+    payStackForm.amount = netTotal * 100;
+    payStackForm.email = user.email;
+    payStackForm.metadata = {
+      userId: user._id,
+    };
+    const payStackReturn = await initiatePayment(payStackForm);
+
+    const paystackRef = payStackReturn.data.data.reference;
+
+    await Transaction.findByIdAndUpdate(
+      transactionId,
+      { transactionRef: paystackRef },
+      { new: true }
+    );
+    return payStackReturn;
+  } catch (error) {
+    throw new ApiError(400, 'Unable to update order');
+  }
+};
+
+const verifyOrder = async (paymentRef) => {
+  const result = await verifyPayment(paymentRef);
+  const transactionRef = result.data.data.reference;
+  await Transaction.findOneAndUpdate(
+    {
+      transactionRef: transactionRef,
+    },
+    { status: 'successful' },
+    { new: true }
+  );
+  return result;
 };
 
 const getOrders = async (criteria = {}) => {
@@ -72,12 +108,4 @@ const getOrder = async (id) => {
   }
 };
 
-const updateOrder = async (orderId, data) => {
-  try {
-    return await Order.findByIdAndUpdate(orderId, data, { new: true });
-  } catch (error) {
-    throw new ApiError(400, 'Unable to update order');
-  }
-};
-
-module.exports = { createOrder, getOrder, getOrders, updateOrder };
+module.exports = { createOrder, getOrder, getOrders, updateOrder, verifyOrder };

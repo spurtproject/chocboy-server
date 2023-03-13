@@ -13,7 +13,7 @@ const { getLocations } = require('../location/location.controller');
 
 router.use('/category', require('../categories/category.routes'));
 
-router.get('/order/paystack/callback', verifyPaymentOrder);
+router.get('/v1/payment/paystack/callback', verifyPaymentOrder);
 
 router.use('/order', userAuthentication, require('../orders/order.routes'));
 

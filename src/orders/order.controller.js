@@ -2,17 +2,28 @@ const catchAsync = require('express-async-handler');
 const orderService = require('./order.service');
 
 const generateOrder = catchAsync(async (req, res) => {
-  const payStackRedirect = await orderService.createOrder(req.user, req.body);
-  console.log(payStackRedirect.data.data);
-  // res.status(200).json({
-  //   status: 'success',
-  //   message: 'Order successfully generated...',
-  //   data,
-  // });
+  const data = await orderService.createOrder(req.user, req.body);
+  res
+    .status(201)
+    .json({ status: 'success', message: 'Order now generated...', data });
 });
 
-const verifyPaymentOrder = (req, res) => {
-  console.log(req.query);
+const addDeliveryInfo = catchAsync(async (req, res) => {
+  const paystackData = await orderService.updateOrder(
+    req.user,
+    req.query.orderId,
+    req.body
+  );
+  const paystackResponse = paystackData.data.data;
+  res.redirect(paystackResponse.authorization_url);
+});
+
+const verifyPaymentOrder = async (req, res) => {
+  const verify = await orderService.verifyOrder(req.query.reference);
+  res.status(200).json({
+    status: true,
+    message: 'Way to go! Payment confirmed & Successful...',
+  });
 };
 
 const getOrders = catchAsync(async (req, res) => {
@@ -27,15 +38,6 @@ const getOrder = catchAsync(async (req, res) => {
   res
     .status(200)
     .json({ status: true, message: 'Order now retrieved...', data });
-});
-
-const addDeliveryInfo = catchAsync(async (req, res) => {
-  const data = await orderService.updateOrder(req.query.orderId, req.body);
-  res.status(201).json({
-    status: 'success',
-    message: 'Delivery Information now updated...',
-    data,
-  });
 });
 
 module.exports = {

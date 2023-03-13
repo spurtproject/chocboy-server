@@ -11,8 +11,6 @@ const router = Router();
 
 router.post('/generate', generateOrder);
 
-router.get('/paystack/callback', verifyPaymentOrder);
-
 router.get('/all', adminAuthorization, getOrders);
 router.get('/:_id', getOrder);
 router.put('/delivery/info', addDeliveryInfo);

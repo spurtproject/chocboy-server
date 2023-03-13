@@ -37,15 +37,11 @@ const orderSchema = new Schema(
       type: String,
       trim: true,
     },
-    city: {
-      type: String,
-      trim: true,
-    },
     address: {
       type: String,
     },
-    country: {
-      type: String,
+    deliveryAmount: {
+      type: Number,
       trim: true,
     },
     deliveryStatus: {
