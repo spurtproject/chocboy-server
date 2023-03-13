@@ -8,6 +8,7 @@ router.use(
   userAuthentication,
   require('../products/product.routes')
 );
+const { getLocations } = require('../location/location.controller');
 
 router.use('/category', require('../categories/category.routes'));
 
@@ -15,7 +16,14 @@ router.use('/order', userAuthentication, require('../orders/order.routes'));
 
 router.use('/user', userAuthentication, getCurrentUser);
 
-router.use('/location', require('../location/location.routes'));
+router.get('/location/all', userAuthentication, getLocations);
+
+router.use(
+  '/location',
+  userAuthentication,
+  adminAuthorization,
+  require('../location/location.routes')
+);
 
 router.use(
   '/admin',

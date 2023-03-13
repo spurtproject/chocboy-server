@@ -9,8 +9,6 @@ const router = Router();
 
 router.post('/create', createLocation);
 
-router.get('/all', getLocations);
-
 router.put('/edit', updateLocation);
 
 router.delete('/:_id', deleteLocation);
