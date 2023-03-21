@@ -8,6 +8,8 @@ const generateOrder = catchAsync(async (req, res) => {
     .json({ status: 'success', message: 'Order now generated...', data });
 });
 
+const generateWindowOrder = (req, res) => {};
+
 const addDeliveryInfo = catchAsync(async (req, res) => {
   const paystackData = await orderService.updateOrder(
     req.user,

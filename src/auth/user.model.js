@@ -17,6 +17,18 @@ const userSchema = new Schema(
     userPin: {
       type: Number,
     },
+    dateOfBirth: {
+      type: String,
+      trim: true,
+    },
+    phone: {
+      type: String,
+      trim: true,
+    },
+    address: {
+      type: String,
+      trim: true,
+    },
     userRole: {
       type: String,
       enums: [getEnumsArray(USER_ROLE)],

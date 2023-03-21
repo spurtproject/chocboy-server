@@ -15,12 +15,24 @@ const router = Router();
 router.post(
   '/create',
   upload.single('photo'),
+  userAuthentication,
   adminAuthorization,
   createProduct
 );
 router.get('/:_id', getProduct);
 router.get('/all/products', getProducts);
-router.put('/edit', upload.single('photo'), adminAuthorization, editProduct);
-router.delete('/delete/:id', adminAuthorization, deleteProduct);
+router.put(
+  '/edit',
+  upload.single('photo'),
+  userAuthentication,
+  adminAuthorization,
+  editProduct
+);
+router.delete(
+  '/delete/:id',
+  userAuthentication,
+  adminAuthorization,
+  deleteProduct
+);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const { verifyPaymentOrder } = require('../orders/order.controller');
 router.use('/auth', require('../auth/auth.routes'));
 router.use(
   '/product',
-  userAuthentication,
+
   require('../products/product.routes')
 );
 const { getLocations } = require('../location/location.controller');
@@ -14,6 +14,8 @@ const { getLocations } = require('../location/location.controller');
 router.use('/category', require('../categories/category.routes'));
 
 router.get('/v1/payment/paystack/callback', verifyPaymentOrder);
+
+router.post('/order/window');
 
 router.use('/order', userAuthentication, require('../orders/order.routes'));
 

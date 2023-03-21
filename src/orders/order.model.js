@@ -8,7 +8,6 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
       trim: true,
-      required: true,
     },
     date: {
       type: String,

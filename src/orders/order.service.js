@@ -4,6 +4,26 @@ const moment = require('moment');
 const { initiatePayment, verifyPayment } = require('../helpers/paystack');
 const ApiError = require('../helpers/error');
 
+const createWindowOrder = async (data) => {
+  const totalPrice = await data.reduce((prev, curr) => {
+    prev += curr.unitPrice * curr.choiceQuantity;
+    return prev;
+  }, 0);
+  const totalItems = await data.reduce((prev, curr) => {
+    prev += curr.choiceQuantity;
+    return prev;
+  }, 0);
+  const date = moment().format('L');
+
+  const rawData = {};
+  rawData.date = date;
+  rawData.totalItems = totalItems;
+  rawData.totalPrice = totalPrice;
+  rawData.items = data;
+  const generateOrder = await Order.create(rawData);
+  return generateOrder;
+};
+
 const createOrder = async (user, data) => {
   const totalPrice = await data.reduce((prev, curr) => {
     prev += curr.unitPrice * curr.choiceQuantity;
@@ -28,7 +48,7 @@ const createOrder = async (user, data) => {
   rawData.transactionId = transactionId;
   rawData.items = data;
   const generateOrder = await Order.create(rawData);
-  s;
+
   return generateOrder;
 };
 
@@ -108,4 +128,11 @@ const getOrder = async (id) => {
   }
 };
 
-module.exports = { createOrder, getOrder, getOrders, updateOrder, verifyOrder };
+module.exports = {
+  createWindowOrder,
+  createOrder,
+  getOrder,
+  getOrders,
+  updateOrder,
+  verifyOrder,
+};
