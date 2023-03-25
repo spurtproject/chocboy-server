@@ -17,6 +17,8 @@ router.get('/v1/payment/paystack/callback', verifyPaymentOrder);
 
 router.post('/order/window');
 
+router.use('/cart', require('../cart/cart.routes'));
+
 router.use('/order', userAuthentication, require('../orders/order.routes'));
 
 router.use('/user', userAuthentication, getCurrentUser);
