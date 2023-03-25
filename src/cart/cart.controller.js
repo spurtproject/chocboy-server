@@ -3,9 +3,7 @@ const catchAsync = require('express-async-handler');
 
 const createCart = catchAsync(async (req, res) => {
   const bodyData = req.body;
-  //   if (req.user) {
-  //     bodyData.userId = req.user._id;
-  //   }
+
   const data = await cartService.createCart(req.body);
 
   res.status(201).json({ status: true, message: 'Cart now added...', data });
