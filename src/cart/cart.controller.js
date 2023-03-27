@@ -35,10 +35,8 @@ const editCartItem = async (req, res) => {
 };
 
 const deleteCart = async (req, res) => {
-  const data = await cartService.deleteCartItem(
-    req.user._id,
-    req.query.productId
-  );
+  await cartService.deleteCartItem(req.user._id, req.query.productId);
+  res.status(200).json({ status: true, message: 'Cart item now deleted...' });
 };
 
 module.exports = { createCart, getCart, updateCart, editCartItem, deleteCart };

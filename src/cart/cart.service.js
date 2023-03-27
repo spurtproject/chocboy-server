@@ -18,13 +18,13 @@ const createCart = async (userId, data) => {
   rawData.items = data;
   rawData.customer = userId;
 
-  const checkCart = await Cart.findOne({ customer: userId });
-  if (checkCart) {
-    throw new ApiError(
-      400,
-      'You already have a cart to your name on this platform'
-    );
-  }
+  // const checkCart = await Cart.findOne({ customer: userId });
+  // if (checkCart) {
+  //   throw new ApiError(
+  //     400,
+  //     'You already have a cart to your name on this platform'
+  //   );
+  // }
 
   return await Cart.create(rawData);
 };
@@ -67,10 +67,11 @@ const editCartItem = async (userId, data, productId) => {
 };
 
 const deleteCartItem = async (userId, productId) => {
-  const data = await Cart.findOneAndUpdate({ customer: userId }, { $pull: {} });
-  console.log(productId);
-  const oneChoice = data.items[productId];
-  console.log(oneChoice);
+  return await Cart.findOneAndUpdate(
+    { customer: userId },
+    { $pull: { items: { _id: productId } } },
+    { new: true }
+  );
 };
 
 module.exports = {
