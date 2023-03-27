@@ -4,7 +4,7 @@ const router = Router();
 
 router.post('/create', createCart);
 
-router.get('/single/:_id', getCart);
+router.get('/single/', getCart);
 
 router.put('/update/:_id', updateCart);
 

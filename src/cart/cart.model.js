@@ -13,11 +13,7 @@ const cartSchema = new Schema(
       type: String,
       trim: true,
     },
-    isCustomizable: {
-      type: Boolean,
-      default: false,
-      trim: true,
-    },
+
     totalItems: {
       type: Number,
       trim: true,

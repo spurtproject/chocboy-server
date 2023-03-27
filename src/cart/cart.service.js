@@ -1,6 +1,7 @@
+const ApiError = require('../helpers/error');
 const Cart = require('./cart.model');
 
-const createCart = async (data) => {
+const createCart = async (userId, data) => {
   const totalPrice = await data.reduce((prev, curr) => {
     prev += curr.unitPrice * curr.choiceQuantity;
     return prev;
@@ -15,16 +16,21 @@ const createCart = async (data) => {
   rawData.totalItems = totalItems;
   rawData.totalPrice = totalPrice;
   rawData.items = data;
+  rawData.customer = userId;
 
   const generateCart = await Cart.create(rawData);
   return generateCart;
 };
 
-const getCart = async (cartId) => {
-  return await Cart.findById(cartId);
+const getCart = async (userId) => {
+  try {
+    return await Cart.findOne({ customer: userId });
+  } catch (error) {
+    throw new ApiError(400, 'Unable to retrieve cart');
+  }
 };
 
-const editCart = async (cartId, data) => {
+const updateCart = async (cartId, data) => {
   const { totalItems, totalPrice } = await Cart.findById(cartId);
   const cartItems = await Cart.findById(cartId);
   const currentCartItems = cartItems.items;
@@ -46,4 +52,4 @@ const editCart = async (cartId, data) => {
   );
 };
 
-module.exports = { createCart, getCart, editCart };
+module.exports = { createCart, getCart, updateCart };

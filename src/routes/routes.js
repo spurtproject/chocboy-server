@@ -3,13 +3,11 @@ const { userAuthentication, adminAuthorization } = require('../helpers/auth');
 const router = Router();
 const { getCurrentUser } = require('../admin/admin.controller');
 const { verifyPaymentOrder } = require('../orders/order.controller');
-router.use('/auth', require('../auth/auth.routes'));
-router.use(
-  '/product',
-
-  require('../products/product.routes')
-);
 const { getLocations } = require('../location/location.controller');
+
+router.use('/auth', require('../auth/auth.routes'));
+
+router.use('/product', require('../products/product.routes'));
 
 router.use('/category', require('../categories/category.routes'));
 
@@ -19,7 +17,7 @@ router.use('/discount', require('../discount/discount.routes'));
 
 router.post('/order/window');
 
-router.use('/cart', require('../cart/cart.routes'));
+router.use('/cart', userAuthentication, require('../cart/cart.routes'));
 
 router.use('/order', userAuthentication, require('../orders/order.routes'));
 
