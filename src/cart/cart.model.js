@@ -18,6 +18,9 @@ const cartSchema = new Schema(
         product: {
           type: String,
         },
+        productImage: {
+          type: String,
+        },
         choiceQuantity: {
           type: Number,
         },
