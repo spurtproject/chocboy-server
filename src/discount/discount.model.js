@@ -8,13 +8,24 @@ const discountSchema = new Schema({
     required: true,
     trim: true,
   },
-  maxNumberOfUsers: {
+  maxNumberOfUse: {
     type: Number,
     trim: true,
   },
-  maximumUse: {
+  maxNumberOfUsePerUser: {
     type: Number,
     trim: true,
   },
-  validity: {},
+  validFrom: {
+    type: Date,
+    trim: true,
+  },
+  validTill: {
+    type: Date,
+    trim: true,
+  },
 });
+
+const Discount = mongoose.model('Discount', discountSchema);
+
+module.exports = Discount;

@@ -20,6 +20,10 @@ const createCart = async (data) => {
   return generateCart;
 };
 
+const getCart = async (cartId) => {
+  return await Cart.findById(cartId);
+};
+
 const editCart = async (cartId, data) => {
   const { totalItems, totalPrice } = await Cart.findById(cartId);
   const cartItems = await Cart.findById(cartId);
@@ -42,4 +46,4 @@ const editCart = async (cartId, data) => {
   );
 };
 
-module.exports = { createCart, editCart };
+module.exports = { createCart, getCart, editCart };

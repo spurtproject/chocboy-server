@@ -9,6 +9,13 @@ const createCart = catchAsync(async (req, res) => {
   res.status(201).json({ status: true, message: 'Cart now added...', data });
 });
 
+const getCart = catchAsync(async (req, res) => {
+  const data = await cartService.getCart(req.params._id);
+  res
+    .status(200)
+    .json({ status: true, message: 'Cart now retrieved...', data });
+});
+
 const updateCart = async (req, res) => {
   const data = await cartService.editCart(req.params._id, req.body);
   res
@@ -18,4 +25,4 @@ const updateCart = async (req, res) => {
 
 const deleteCart = (req, res) => {};
 
-module.exports = { createCart, updateCart, deleteCart };
+module.exports = { createCart, getCart, updateCart, deleteCart };
