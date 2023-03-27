@@ -18,13 +18,13 @@ const createCart = async (userId, data) => {
   rawData.items = data;
   rawData.customer = userId;
 
-  // const checkCart = await Cart.findOne({ customer: userId });
-  // if (checkCart) {
-  //   throw new ApiError(
-  //     400,
-  //     'You already have a cart to your name on this platform'
-  //   );
-  // }
+  const checkCart = await Cart.findOne({ customer: userId });
+  if (checkCart) {
+    throw new ApiError(
+      400,
+      'You already have a cart to your name on this platform'
+    );
+  }
 
   return await Cart.create(rawData);
 };
