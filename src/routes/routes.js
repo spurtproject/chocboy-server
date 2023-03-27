@@ -25,7 +25,7 @@ router.use('/order', userAuthentication, require('../orders/order.routes'));
 
 router.use('/user', userAuthentication, getCurrentUser);
 
-router.get('/location/all', userAuthentication, getLocations);
+router.get('/location/all', getLocations);
 
 router.use(
   '/location',
