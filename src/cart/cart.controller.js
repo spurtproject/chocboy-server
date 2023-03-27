@@ -17,12 +17,28 @@ const getCart = catchAsync(async (req, res) => {
 });
 
 const updateCart = async (req, res) => {
-  const data = await cartService.updateCart(req.params._id, req.body);
+  const data = await cartService.updateCart(req.user._id, req.body);
   res
     .status(200)
     .json({ status: 'success', message: 'Cart now updated...', data });
 };
 
-const deleteCart = (req, res) => {};
+const editCartItem = async (req, res) => {
+  const data = await cartService.editCartItem(
+    req.user._id,
+    req.body,
+    req.query.productId
+  );
+  res
+    .status(201)
+    .json({ status: true, message: 'Cart item successfully edited...', data });
+};
 
-module.exports = { createCart, getCart, updateCart, deleteCart };
+const deleteCart = async (req, res) => {
+  const data = await cartService.deleteCartItem(
+    req.user._id,
+    req.query.productId
+  );
+};
+
+module.exports = { createCart, getCart, updateCart, editCartItem, deleteCart };

@@ -13,15 +13,6 @@ const cartSchema = new Schema(
       type: String,
       trim: true,
     },
-
-    totalItems: {
-      type: Number,
-      trim: true,
-    },
-    totalPrice: {
-      type: Number,
-    },
-
     items: [
       {
         product: {
@@ -32,6 +23,10 @@ const cartSchema = new Schema(
         },
         unitPrice: {
           type: Number,
+        },
+        customizedText: {
+          type: String,
+          required: false,
         },
       },
     ],

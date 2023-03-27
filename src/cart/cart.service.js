@@ -18,8 +18,15 @@ const createCart = async (userId, data) => {
   rawData.items = data;
   rawData.customer = userId;
 
-  const generateCart = await Cart.create(rawData);
-  return generateCart;
+  const checkCart = await Cart.findOne({ customer: userId });
+  if (checkCart) {
+    throw new ApiError(
+      400,
+      'You already have a cart to your name on this platform'
+    );
+  }
+
+  return await Cart.create(rawData);
 };
 
 const getCart = async (userId) => {
@@ -30,26 +37,46 @@ const getCart = async (userId) => {
   }
 };
 
-const updateCart = async (cartId, data) => {
-  const { totalItems, totalPrice } = await Cart.findById(cartId);
-  const cartItems = await Cart.findById(cartId);
+const updateCart = async (userId, data) => {
+  const cartItems = await Cart.findOne({ customer: userId });
   const currentCartItems = cartItems.items;
 
   cartItems.items.push(data);
-  const saveme = await cartItems.save();
+  return await cartItems.save();
 
-  const newTotalPrice = totalPrice + data.choiceQuantity * data.unitPrice;
-  const newTotalItems = totalItems + data.choiceQuantity;
+  // const newTotalPrice = totalPrice + data.choiceQuantity * data.unitPrice;
+  // const newTotalItems = totalItems + data.choiceQuantity;
 
-  const updatedData = {};
-  updatedData.totalItems = newTotalItems;
-  updatedData.totalPrice = newTotalPrice;
+  // const updatedData = {};
+  // updatedData.totalItems = newTotalItems;
+  // updatedData.totalPrice = newTotalPrice;
 
-  return await Cart.findByIdAndUpdate(
-    cartId,
-    { $set: updatedData },
+  // return await Cart.findOneAndUpdate(
+  //   { customer: userId },
+  //   { $set: updatedData },
+  //   { new: true }
+  // );
+};
+
+const editCartItem = async (userId, data, productId) => {
+  return await Cart.findOneAndUpdate(
+    { 'items._id': productId },
+    { $set: { 'items.$': data } },
     { new: true }
   );
 };
 
-module.exports = { createCart, getCart, updateCart };
+const deleteCartItem = async (userId, productId) => {
+  const data = await Cart.findOneAndUpdate({ customer: userId }, { $pull: {} });
+  console.log(productId);
+  const oneChoice = data.items[productId];
+  console.log(oneChoice);
+};
+
+module.exports = {
+  createCart,
+  getCart,
+  editCartItem,
+  updateCart,
+  deleteCartItem,
+};
