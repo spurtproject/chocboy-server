@@ -56,4 +56,4 @@ const getDiscountCodes = async () => {
 
 const deleteDiscountCode = (id) => {};
 
-module.exports = { generateCode, getDiscountCodes updateCode };
+module.exports = { generateCode, getDiscountCodes, updateCode };
