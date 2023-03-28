@@ -15,10 +15,12 @@ const discountSchema = new Schema({
   discountPercentage: {
     type: Number,
     trim: true,
+    default: null,
   },
   discountPrice: {
     type: Number,
     trim: true,
+    default: null,
   },
   maxNumberOfUsePerUser: {
     type: Number,
