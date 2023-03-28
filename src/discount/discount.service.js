@@ -42,7 +42,7 @@ const updateCode = async (discountId, data) => {
   if (data.validTill) {
     updatedData.validTill = new Date(data.validTill);
   }
-  console.log(updatedData);
+
   return await Discount.findByIdAndUpdate(
     discountId,
     { $set: updatedData },
@@ -50,6 +50,10 @@ const updateCode = async (discountId, data) => {
   );
 };
 
+const getDiscountCodes = async () => {
+  return await Discount.find();
+};
+
 const deleteDiscountCode = (id) => {};
 
-module.exports = { generateCode, updateCode };
+module.exports = { generateCode, getDiscountCodes updateCode };

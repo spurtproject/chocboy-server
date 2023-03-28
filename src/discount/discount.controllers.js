@@ -25,6 +25,15 @@ const editDiscountCode = catchAsync(async (req, res) => {
     .json({ status: true, message: 'Discount code now updated...' });
 });
 
+const getAll = async (req, res) => {
+  const data = await discountService.getDiscountCodes();
+  res.status(201).json({
+    status: 'success',
+    message: 'All discount code now retrieved...',
+    data,
+  });
+};
+
 const deleteDiscountCode = (req, res) => {};
 
-module.exports = { generateDiscountCode, editDiscountCode };
+module.exports = { generateDiscountCode, editDiscountCode, getAll };
