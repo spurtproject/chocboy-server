@@ -1,5 +1,5 @@
 const discountService = require('./discount.service');
-const ApiError = require('../helpers/error');
+const ApiError = require('../../helpers/error');
 const catchAsync = require('express-async-handler');
 
 const generateDiscountCode = catchAsync(async (req, res) => {
@@ -12,13 +12,6 @@ const generateDiscountCode = catchAsync(async (req, res) => {
 });
 
 const editDiscountCode = catchAsync(async (req, res) => {
-  // if (!req.body.maxNumberOfUse || !req.body.maxNumberOfUsePerUser) {
-  //   res.status(403).json({
-  //     status: 'access denied',
-  //     message: "You're only at liberty to edit number of use and for user",
-  //   });
-  //   return;
-  // }
   const data = await discountService.updateCode(req.params._id, req.body);
   res
     .status(200)
@@ -29,7 +22,7 @@ const getAll = async (req, res) => {
   const data = await discountService.getDiscountCodes();
   res.status(201).json({
     status: 'success',
-    message: 'All discount code now retrieved...',
+    message: 'All discount codes now retrieved...',
     data,
   });
 };

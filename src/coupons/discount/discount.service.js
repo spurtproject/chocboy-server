@@ -1,5 +1,5 @@
 const Discount = require('./discount.model');
-const ApiError = require('../helpers/error');
+const ApiError = require('../../helpers/error');
 
 const generateCode = async (data) => {
   try {
@@ -8,6 +8,8 @@ const generateCode = async (data) => {
     rawData.validTill = new Date(data.validTill);
     rawData.maxNumberOfUse = data.maxNumberOfUse;
     rawData.maxNumberOfUsePerUser = data.maxNumberOfUsePerUser;
+    rawData.discountPercentage = data.discountPercentage / 100;
+    rawData.discountPrice = data.discountPrice;
 
     const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 

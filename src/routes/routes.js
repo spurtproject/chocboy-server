@@ -13,7 +13,7 @@ router.use('/category', require('../categories/category.routes'));
 
 router.get('/v1/payment/paystack/callback', verifyPaymentOrder);
 
-router.use('/discount', require('../discount/discount.routes'));
+router.use('/discount', require('../coupons/discount/discount.routes'));
 
 router.post('/order/window');
 
@@ -24,6 +24,8 @@ router.use('/order', userAuthentication, require('../orders/order.routes'));
 router.use('/user', userAuthentication, getCurrentUser);
 
 router.get('/location/all', getLocations);
+
+router.use('/coupon', require('../coupons/coupon.routes'));
 
 router.use(
   '/location',

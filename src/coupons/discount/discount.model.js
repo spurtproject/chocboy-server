@@ -12,6 +12,11 @@ const discountSchema = new Schema({
     type: Number,
     trim: true,
   },
+  numberOfTimesUsed: {
+    type: Number,
+    trim: true,
+    default: 0,
+  },
   discountPercentage: {
     type: Number,
     trim: true,
