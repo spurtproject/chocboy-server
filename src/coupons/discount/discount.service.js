@@ -8,8 +8,12 @@ const generateCode = async (data) => {
     rawData.validTill = new Date(data.validTill);
     rawData.maxNumberOfUse = data.maxNumberOfUse;
     rawData.maxNumberOfUsePerUser = data.maxNumberOfUsePerUser;
-    rawData.discountPercentage = data.discountPercentage / 100;
-    rawData.discountPrice = data.discountPrice;
+    if (data.discountPercentage) {
+      rawData.discountPercentage = data.discountPercentage / 100;
+    }
+    if (data.discountPrice) {
+      rawData.discountPrice = data.discountPrice;
+    }
 
     const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 

@@ -9,8 +9,14 @@ const generateCode = async (data) => {
     rawData.validTill = new Date(data.validTill);
     rawData.maxNumberOfUse = data.maxNumberOfUse;
     rawData.maxNumberOfUsePerUser = data.maxNumberOfUsePerUser;
-    rawData.shippingPercentage = data.shippingPercentage / 100;
-    rawData.shippingPrice = data.shippingPrice;
+    if (data.shippingPercentage) {
+      rawData.shippingPercentage = data.shippingPercentage / 100;
+    }
+    if (data.shippingPrice) {
+      rawData.shippingPrice = data.shippingPrice;
+    }
+
+    console.log(rawData);
 
     const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 
