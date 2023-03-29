@@ -10,11 +10,9 @@ const discountSchema = new Schema({
   },
   maxNumberOfUse: {
     type: Number,
-    trim: true,
   },
   numberOfTimesUsed: {
     type: Number,
-    trim: true,
     default: 0,
   },
   discountPercentage: {
@@ -29,7 +27,6 @@ const discountSchema = new Schema({
   },
   maxNumberOfUsePerUser: {
     type: Number,
-    trim: true,
   },
   validFrom: {
     type: Date,
