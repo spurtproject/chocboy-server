@@ -16,8 +16,11 @@ const addDeliveryInfo = catchAsync(async (req, res) => {
     req.query.orderId,
     req.body
   );
-  const paystackResponse = paystackData.data.data;
-  res.redirect(paystackResponse.authorization_url);
+  // const paystackResponse = paystackData.data.data;
+  res.status(200).json({
+    status: true,
+    message: 'Delivery and shipping details now updated...',
+  });
 });
 
 const verifyPaymentOrder = async (req, res) => {
