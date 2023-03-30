@@ -44,8 +44,21 @@ const createOrder = async (user, data) => {
       numberOfTimesUsed,
       maxNumberOfUse,
       maxNumberOfUsePerUser,
+      validFrom,
+      validTill,
     } = await Discount.findOne({ discountCode: couponCode.discountCode });
+    console.log(validFrom);
+    console.log(Date.now());
 
+    if (validTill > Date.now()) {
+      throw new ApiError(
+        400,
+        'This discount code is expired and thus invalid...'
+      );
+    }
+    if (validFrom < Date.now()) {
+      throw new ApiError(400, 'This discount code is not yet valid for use...');
+    }
     const checkDiscountCodeUse = await CouponUse.findOne({
       customer: user._id,
       couponCode: couponCode.discountCode,
