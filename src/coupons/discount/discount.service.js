@@ -70,7 +70,7 @@ const getDiscountCodes = async () => {
 
 const deleteDiscountCode = async (id) => {
   try {
-    return await Discount.findOneAndDelete(id);
+    return await Discount.findOneAndDelete({ discountCode: id });
   } catch (error) {
     throw new ApiError(400, 'Unable to delete coupon code...');
   }

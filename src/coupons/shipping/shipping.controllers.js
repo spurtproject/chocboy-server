@@ -27,4 +27,17 @@ const getAll = async (req, res) => {
   });
 };
 
-module.exports = { generateShippingCode, editDiscountCode, getAll };
+const deleteShippingCoupon = async (req, res) => {
+  await shippingService.deleteShippingCode(req.query.coupon);
+  res.status(200).json({
+    status: true,
+    message: 'This shipping coupon was just deleted...',
+  });
+};
+
+module.exports = {
+  generateShippingCode,
+  editDiscountCode,
+  getAll,
+  deleteShippingCoupon,
+};

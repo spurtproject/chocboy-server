@@ -16,8 +16,6 @@ const generateCode = async (data) => {
       rawData.shippingPrice = data.shippingPrice;
     }
 
-    console.log(rawData);
-
     const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 
     const makeId = (length) => {
@@ -60,7 +58,24 @@ const updateCode = async (shippingId, data) => {
 };
 
 const getShippingCodes = async () => {
-  return await Shipping.find();
+  try {
+    return await Shipping.find();
+  } catch (error) {
+    throw new ApiError(400, 'Unable to get shipping coupons...');
+  }
 };
 
-module.exports = { generateCode, getShippingCodes, updateCode };
+const deleteShippingCode = async (coupon) => {
+  try {
+    return await Shipping.findOneAndDelete({ shippingCode: coupon });
+  } catch (error) {
+    throw new ApiError(400, 'Unable to delete shipping code...');
+  }
+};
+
+module.exports = {
+  generateCode,
+  getShippingCodes,
+  updateCode,
+  deleteShippingCode,
+};
