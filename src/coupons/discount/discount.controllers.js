@@ -27,6 +27,18 @@ const getAll = async (req, res) => {
   });
 };
 
-const deleteDiscountCode = (req, res) => {};
+const deleteDiscountCoupon = async (req, res) => {
+  await discountService.deleteDiscountCode(req.query.coupon);
 
-module.exports = { generateDiscountCode, editDiscountCode, getAll };
+  res.status(200).json({
+    status: true,
+    message: 'This discount coupon was just deleted...',
+  });
+};
+
+module.exports = {
+  generateDiscountCode,
+  editDiscountCode,
+  getAll,
+  deleteDiscountCoupon,
+};

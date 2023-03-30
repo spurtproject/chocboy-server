@@ -41,25 +41,44 @@ const generateCode = async (data) => {
 };
 
 const updateCode = async (discountId, data) => {
-  const updatedData = data;
-  if (data.validFrom) {
-    updatedData.validFrom = new Date(data.validFrom);
-  }
-  if (data.validTill) {
-    updatedData.validTill = new Date(data.validTill);
-  }
+  try {
+    const updatedData = data;
+    if (data.validFrom) {
+      updatedData.validFrom = new Date(data.validFrom);
+    }
+    if (data.validTill) {
+      updatedData.validTill = new Date(data.validTill);
+    }
 
-  return await Discount.findByIdAndUpdate(
-    discountId,
-    { $set: updatedData },
-    { new: true }
-  );
+    return await Discount.findByIdAndUpdate(
+      discountId,
+      { $set: updatedData },
+      { new: true }
+    );
+  } catch (error) {
+    throw new ApiError(400, 'Unable to update coupon code...');
+  }
 };
 
 const getDiscountCodes = async () => {
-  return await Discount.find();
+  try {
+    return await Discount.find();
+  } catch (error) {
+    throw new ApiError(400, 'Unable to get coupon codes...');
+  }
 };
 
-const deleteDiscountCode = (id) => {};
+const deleteDiscountCode = async (id) => {
+  try {
+    return await Discount.findOneAndDelete(id);
+  } catch (error) {
+    throw new ApiError(400, 'Unable to delete coupon code...');
+  }
+};
 
-module.exports = { generateCode, getDiscountCodes, updateCode };
+module.exports = {
+  generateCode,
+  getDiscountCodes,
+  updateCode,
+  deleteDiscountCode,
+};
