@@ -42,19 +42,23 @@ const generateCode = async (data) => {
 };
 
 const updateCode = async (shippingId, data) => {
-  const updatedData = data;
-  if (data.validFrom) {
-    updatedData.validFrom = new Date(data.validFrom);
-  }
-  if (data.validTill) {
-    updatedData.validTill = new Date(data.validTill);
-  }
+  try {
+    const updatedData = data;
+    if (data.validFrom) {
+      updatedData.validFrom = new Date(data.validFrom);
+    }
+    if (data.validTill) {
+      updatedData.validTill = new Date(data.validTill);
+    }
 
-  return await Shipping.findByIdAndUpdate(
-    shippingId,
-    { $set: updatedData },
-    { new: true }
-  );
+    return await Shipping.findByIdAndUpdate(
+      shippingId,
+      { $set: updatedData },
+      { new: true }
+    );
+  } catch (error) {
+    throw new ApiError(400, 'Unable to update coupon code...');
+  }
 };
 
 const getShippingCodes = async () => {
