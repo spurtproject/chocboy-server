@@ -25,6 +25,8 @@ router.use('/user', userAuthentication, getCurrentUser);
 
 router.get('/location/all', getLocations);
 
+router.use('/blog', require('../blog/blog.routes'));
+
 router.use('/coupon', require('../coupons/coupon.routes'));
 
 router.use(
