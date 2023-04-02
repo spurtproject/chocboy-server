@@ -27,7 +27,12 @@ router.get('/location/all', getLocations);
 
 router.use('/blog', require('../blog/blog.routes'));
 
-router.use('/coupon', require('../coupons/coupon.routes'));
+router.use(
+  '/coupon',
+  userAuthentication,
+  adminAuthorization,
+  require('../coupons/coupon.routes')
+);
 
 router.use(
   '/location',
