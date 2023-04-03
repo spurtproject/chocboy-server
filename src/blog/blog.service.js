@@ -45,8 +45,23 @@ const editBlog = async (blogId, data) => {
   return await Blog.findByIdAndUpdate(blogId, data, { new: true });
 };
 
+const publishBlog = async (blogId) => {
+  return await Blog.findByIdAndUpdate(
+    blogId,
+    { state: 'published' },
+    { new: true }
+  );
+};
+
 const deleteBlog = async (id) => {
   return await Blog.findByIdAndDelete(id);
 };
 
-module.exports = { createBlog, deleteBlog, editBlog, getBlog, getBlogs };
+module.exports = {
+  createBlog,
+  deleteBlog,
+  editBlog,
+  getBlog,
+  getBlogs,
+  publishBlog,
+};

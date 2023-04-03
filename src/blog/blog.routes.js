@@ -7,6 +7,7 @@ const {
   editBlog,
   getBlog,
   getBlogs,
+  publishBlog,
 } = require('./blog.controllers');
 
 const upload = require('../helpers/multer');
@@ -23,6 +24,8 @@ router.post(
 router.get('/all', getBlogs);
 
 router.get('/:_id', getBlog);
+
+router.patch('/publish', userAuthentication, adminAuthorization, publishBlog);
 
 router.put(
   '/edit',

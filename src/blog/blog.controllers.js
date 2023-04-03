@@ -40,6 +40,16 @@ const editBlog = async (req, res) => {
     .json({ status: 'success', message: 'Blog successfully updated...', data });
 };
 
+const publishBlog = catchAsync(async (req, res) => {
+  const data = await blogService.publishBlog(req.query.blogId);
+
+  res.status(200).json({
+    status: true,
+    message: `The blog ${req.query.blogId} was just published...`,
+    data,
+  });
+});
+
 const deleteBlog = catchAsync(async (req, res) => {
   await blogService.deleteBlog(req.params._id);
   res.status(200).json({
@@ -48,4 +58,11 @@ const deleteBlog = catchAsync(async (req, res) => {
   });
 });
 
-module.exports = { createBlog, deleteBlog, editBlog, getBlog, getBlogs };
+module.exports = {
+  createBlog,
+  deleteBlog,
+  editBlog,
+  getBlog,
+  getBlogs,
+  publishBlog,
+};
