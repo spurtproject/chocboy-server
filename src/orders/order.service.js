@@ -121,18 +121,37 @@ const createOrder = async (user, data) => {
       return prev;
     }, 0);
 
+    
+    // PAYSTCK gateway here
     const date = moment().format('L');
+    const form = {};
+    form.amount = netTotalPrice * 100;
+    form.email = user.email;
+    form.metadata = {
+      userId: user._id,
+    };
+    let payStackRespone;
+    await initiatePayment(form, (err, body) => {
+      if(err){
+        throw new ApiError(400, "Error initializing payment")
+      }
+      payStackRespone = JSON.parse(body)
+    });
+    const paystackRef = payStackRespone.data.reference;
+
     const transactionData = {};
     transactionData.customer = user._id;
-    transactionData.amount = netTotalPrice;
+    transactionData.amount = netTotalPrice; // CHECK what should be passed here
     transactionData.status = 'pending';
+    transactionData.transactionRef = paystackRef // check if this gives an error
+
     const createTransaction = await Transaction.create(transactionData);
     const transactionId = createTransaction._id;
     const rawData = {};
     rawData.customer = user._id;
     rawData.date = date;
     rawData.totalItems = totalItems;
-    rawData.totalPrice = netTotalPrice;
+    rawData.totalPrice = totalPrice;
     rawData.transactionId = transactionId;
     rawData.items = data;
 
@@ -144,8 +163,8 @@ const createOrder = async (user, data) => {
       { numberOfTimesUsed: newNumberOfTimesUsed },
       { new: true }
     );
-
     return generateOrder;
+    
   }
 
   const totalPrice = await data.reduce((prev, curr) => {
@@ -156,12 +175,32 @@ const createOrder = async (user, data) => {
     prev += curr.choiceQuantity;
     return prev;
   }, 0);
+
+  // PAYSTCK gateway here
   const date = moment().format('L');
+
+  const form = {};
+  form.amount = netTotal * 100;
+  form.email = user.email;
+  form.metadata = {
+    userId: user._id,
+  };
+  let payStackRespone;
+  await initiatePayment(form, (err, body) => {
+    if(err){
+      throw new ApiError(400, "Error initializing payment")
+    }
+    payStackRespone = JSON.parse(body)
+  });
+  const paystackRef = payStackRespone.data.reference;
+
+
   const transactionData = {};
   transactionData.customer = user._id;
   transactionData.amount = totalPrice;
   transactionData.status = 'pending';
-
+  transactionData.transactionRef = paystackRef
+  
   const createTransaction = await Transaction.create(transactionData);
   const transactionId = createTransaction._id;
   const rawData = {};
@@ -294,11 +333,13 @@ const updateOrder = async (user, orderId, data) => {
     const netTotal = data.deliveryAmount + totalPrice;
     const newTotal = { totalPrice: netTotal };
     await Order.findByIdAndUpdate(orderId, { $set: newTotal }, { new: true });
-    return await Order.findByIdAndUpdate(
+    // return await Order.findByIdAndUpdate(
+    await Order.findByIdAndUpdate(
       orderId,
       { $set: data },
       { new: true }
     );
+    // Inititate Paystack payment
     // const payStackForm = {};
     // payStackForm.amount = netTotal * 100;
     // payStackForm.email = user.email;
@@ -309,20 +350,46 @@ const updateOrder = async (user, orderId, data) => {
 
     // const paystackRef = payStackReturn.data.data.reference;
 
-    // await Transaction.findByIdAndUpdate(
-    //   transactionId,
-    //   { transactionRef: paystackRef },
-    //   { new: true }
-    // );
-    // return payStackReturn;
+    const form = {};
+    form.amount = netTotal * 100;
+    form.email = user.email;
+    form.metadata = {
+      userId: user._id,
+    };
+    let payStackRespone;
+    await initiatePayment(form, (err, body) => {
+      if(err){
+        throw new ApiError(400, "Error initializing payment")
+      }
+      payStackRespone = JSON.parse(body)
+    });
+    const paystackRef = payStackRespone.data.reference;
+
+    await Transaction.findByIdAndUpdate(
+      transactionId,
+      { transactionRef: paystackRef },
+      { new: true }
+    );
+    return payStackRespone;
+
   } catch (error) {
     throw new ApiError(400, 'Unable to update order');
   }
 };
 
 const verifyOrder = async (paymentRef) => {
-  const result = await verifyPayment(paymentRef);
-  const transactionRef = result.data.data.reference;
+  // const result = await verifyPayment(paymentRef);
+  // const transactionRef = result.data.data.reference;
+
+  let paymentResult
+  await verifyPayment(paymentRef, (err, body) => {
+    if(err){
+      throw new ApiError(400, 'Unable to verify payment')
+    }
+    paymentResult = JSON.parse(body)
+  });
+  const transactionRef = paymentResult.data.reference;
+
   await Transaction.findOneAndUpdate(
     {
       transactionRef: transactionRef,
