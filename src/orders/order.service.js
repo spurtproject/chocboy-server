@@ -137,7 +137,8 @@ const createOrder = async (user, data) => {
       }
       payStackRespone = JSON.parse(body)
     });
-    const paystackRef = payStackRespone.data.reference;
+    // const paystackRef = payStackRespone.data.reference;
+    const paystackRef = payStackRespone.data.data.reference;
 
     const transactionData = {};
     transactionData.customer = user._id;
@@ -397,7 +398,7 @@ const verifyOrder = async (paymentRef) => {
     { status: 'successful' },
     { new: true }
   );
-  return result;
+  return 'confirmed';
 };
 
 const getOrders = async (criteria = {}) => {
