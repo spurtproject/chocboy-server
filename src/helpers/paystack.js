@@ -51,6 +51,8 @@ const paystack = (req) => {
         const opt = {
             // url: 'https://api.paystack.co/transaction/initialize',
             url: PAYSTACK_INITIALIZE,
+            // check paystack doc for redirect url format, get this from Sonia
+            // already did that actually, using the wrong route was the p
             headers: {
                 authorization: secretKey,
                 'content-type': 'application/json',

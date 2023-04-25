@@ -24,10 +24,11 @@ const addDeliveryInfo = catchAsync(async (req, res) => {
 });
 
 const verifyPaymentOrder = async (req, res) => {
+  // await orderService.verifyOrder(req.query.reference);
   await orderService.verifyOrder(req.body.reference);
   res.status(200).json({
     status: true,
-    message: 'Way to go! Payment confirmed & Successful...',
+    message: 'Way to go! Payment confirmed & Successful...'
   });
 };
 
