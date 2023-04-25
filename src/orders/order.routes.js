@@ -11,7 +11,7 @@ const router = Router();
 
 router.post('/generate', generateOrder);
 
-router.post('/verify', verifyPaymentOrder)
+// router.post('/verify', verifyPaymentOrder)
 
 router.get('/all', adminAuthorization, getOrders);
 router.get('/:_id', getOrder);

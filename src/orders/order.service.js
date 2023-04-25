@@ -129,6 +129,8 @@ const createOrder = async (user, data) => {
     form.email = user.email;
     form.metadata = {
       userId: user._id,
+      // address: user.address,
+      
     };
     let payStackRespone;
     await initiatePayment(form, (err, body) => {
@@ -137,8 +139,8 @@ const createOrder = async (user, data) => {
       }
       payStackRespone = JSON.parse(body)
     });
-    // const paystackRef = payStackRespone.data.reference;
-    const paystackRef = payStackRespone.data.data.reference;
+    // const paystackRef = payStackRespone.data.data.reference;
+    const paystackRef = payStackRespone.data.reference;
 
     const transactionData = {};
     transactionData.customer = user._id;
@@ -381,6 +383,7 @@ const updateOrder = async (user, orderId, data) => {
 const verifyOrder = async (paymentRef) => {
   // const result = await verifyPayment(paymentRef);
   // const transactionRef = result.data.data.reference;
+  // const transactionRef = req.query.reference
 
   let paymentResult
   await verifyPayment(paymentRef, (err, body) => {
