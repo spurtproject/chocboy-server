@@ -5,13 +5,14 @@ const {
   getOrders,
   addDeliveryInfo,
   verifyPaymentOrder,
+  generateWindowOrder
 } = require('./order.controller');
 const { adminAuthorization } = require('../helpers/auth');
 const router = Router();
 
 router.post('/generate', generateOrder);
 
-// router.post('/verify', verifyPaymentOrder)
+router.post('/window/generate', generateWindowOrder)
 
 router.get('/all', adminAuthorization, getOrders);
 router.get('/:_id', getOrder);

@@ -8,7 +8,10 @@ const generateOrder = catchAsync(async (req, res) => {
     .json({ status: 'success', message: 'Order now generated...', data });
 });
 
-const generateWindowOrder = (req, res) => {};
+const generateWindowOrder = catchAsync(async (req, res) => {
+  const data = await orderService.createWindowOrder(req.body)
+  res.status(201).json({status: true, message: 'order window generated', data})
+});
 
 const addDeliveryInfo = catchAsync(async (req, res) => {
   const paystackData = await orderService.updateOrder(
@@ -52,4 +55,5 @@ module.exports = {
   getOrders,
   verifyPaymentOrder,
   addDeliveryInfo,
+  generateWindowOrder
 };
