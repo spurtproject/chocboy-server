@@ -12,7 +12,7 @@ router.post('/create', generateDiscountCode);
 
 router.get('/all', getAll);
 
-router.get('/single', getDiscount)
+router.post('/single', getDiscount)
 
 router.patch('/:_id', editDiscountCode);
 
