@@ -11,7 +11,7 @@ router.use('/product', require('../products/product.routes'));
 
 router.use('/category', require('../categories/category.routes'));
 
-router.get('/v1/payment/paystack/callback', verifyPaymentOrder);
+router.post('/v1/payment/paystack/callback', verifyPaymentOrder);
 
 router.use('/discount', require('../coupons/discount/discount.routes'));
 
