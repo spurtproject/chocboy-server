@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const {
+  getSingleShippingCode,
   generateShippingCode,
   editDiscountCode,
   getAll,
@@ -8,6 +9,8 @@ const {
 const router = Router();
 
 router.post('/create', generateShippingCode);
+
+router.get('/single', getSingleShippingCode);
 
 router.get('/all', getAll);
 

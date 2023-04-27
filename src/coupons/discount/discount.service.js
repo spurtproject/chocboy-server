@@ -60,6 +60,15 @@ const updateCode = async (discountId, data) => {
   }
 };
 
+// code for single discount
+const getSingleDiscountCode = async(code) => {
+  const discountInfo = await Discount.findOne({discountCode: code})
+  if(!discountInfo){
+    throw new ApiError(400, 'Discount code either does not exist or is invalid')
+  }
+  return discountInfo
+}
+
 const getDiscountCodes = async () => {
   try {
     return await Discount.find();
@@ -78,6 +87,7 @@ const deleteDiscountCode = async (id) => {
 
 module.exports = {
   generateCode,
+  getSingleDiscountCode,
   getDiscountCodes,
   updateCode,
   deleteDiscountCode,

@@ -61,6 +61,15 @@ const updateCode = async (shippingId, data) => {
   }
 };
 
+const getSingleShippingCode = async (code) => {
+  const shippingInfo = await Shipping.findOne({shippingCode: code})
+  if(!shippingInfo){
+    throw new ApiError(400, 'Shipping code does not exist or is invalid')
+  }
+  return shippingInfo
+  
+}
+
 const getShippingCodes = async () => {
   try {
     return await Shipping.find();
@@ -78,6 +87,7 @@ const deleteShippingCode = async (coupon) => {
 };
 
 module.exports = {
+  getSingleShippingCode,
   generateCode,
   getShippingCodes,
   updateCode,
