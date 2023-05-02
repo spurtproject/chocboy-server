@@ -9,6 +9,7 @@ const { initiatePayment, verifyPayment } = require('../helpers/paystack');
 const ApiError = require('../helpers/error');
 const { raw } = require('express');
 
+
 const createWindowOrder = async (data) => {
   const totalPrice = await data.items.reduce((prev, curr) => {
     prev += curr.unitPrice * curr.choiceQuantity;
@@ -414,6 +415,26 @@ const verifyOrder = async (paymentRef) => {
   return 'confirmed';
 };
 
+const verifyStatus = (event) => {
+  if(!event){
+    throw new ApiError('Did not get an event')
+  }
+
+  let eventResult
+  if(event.event === "customeridentification.failed"){
+    eventResult = "Event failed"
+  }
+  else if(event.event === "charge.dispute.create"){
+    eventResult = "Event has a dispute issue"
+  }
+  else if (event.event === "customeridentification.success"){
+    eventResult = "Event Successful"
+  }
+  
+  // eventData = event.data
+  return eventResult;
+}
+
 const getOrders = async (criteria = {}) => {
   try {
     let response = {};
@@ -456,4 +477,5 @@ module.exports = {
   getOrders,
   updateOrder,
   verifyOrder,
+  verifyStatus
 };
