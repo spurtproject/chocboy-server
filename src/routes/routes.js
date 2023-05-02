@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { userAuthentication, adminAuthorization } = require('../helpers/auth');
 const router = Router();
 const { getCurrentUser } = require('../admin/admin.controller');
-const { verifyPaymentOrder } = require('../orders/order.controller');
+const { verifyPaymentOrder, verifyPaymentStatus } = require('../orders/order.controller');
 const { getLocations } = require('../location/location.controller');
 
 router.use('/auth', require('../auth/auth.routes'));
@@ -13,12 +13,11 @@ router.use('/category', require('../categories/category.routes'));
 
 router.post('/v1/payment/paystack/callback', verifyPaymentOrder);
 
+router.post('v2/payment/paystack/webhook', verifyPaymentStatus);
+
 router.use('/discount', require('../coupons/discount/discount.routes'));
 
 router.use('/shipping', require('../coupons/shipping/shipping.routes'));
-
-// router.post('/order/window');
-// No need for the above router, single I'm already fetching it via order.routes below
 
 router.use('/cart', userAuthentication, require('../cart/cart.routes'));
 
@@ -33,7 +32,6 @@ router.use('/blog', require('../blog/blog.routes'));
 router.use(
   '/coupon',
   userAuthentication,
-  adminAuthorization,
   require('../coupons/coupon.routes')
 );
 

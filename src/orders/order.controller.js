@@ -35,6 +35,11 @@ const verifyPaymentOrder = async (req, res) => {
   });
 };
 
+const verifyPaymentStatus = async (req, res) => {
+  await orderService.verifyStatus(req.body);
+  res.send(200);
+}
+
 const getOrders = catchAsync(async (req, res) => {
   const data = await orderService.getOrders(req.query);
   res
@@ -54,6 +59,7 @@ module.exports = {
   getOrder,
   getOrders,
   verifyPaymentOrder,
+  verifyPaymentStatus,
   addDeliveryInfo,
   generateWindowOrder
 };
