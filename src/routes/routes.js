@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const { userAuthentication, adminAuthorization } = require("../helpers/auth");
 const router = Router();
-const { getCurrentUser } = require("../admin/admin.controller");
+const { getCurrentUser } = require("../admin/controllers");
 // const { verifyPaymentOrder, verifyPaymentStatus } = require('../orders/order.controller');
 const { getLocations } = require("../location/location.controller");
 
