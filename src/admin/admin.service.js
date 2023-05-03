@@ -1,19 +1,19 @@
-const User = require('../auth/user.model');
-const ApiError = require('../helpers/error');
-const Product = require('../products/product.model');
-const Order = require('../orders/order.model');
-const Transaction = require('../transactions/transaction.model');
+const User = require("../auth/models/user.model");
+const ApiError = require("../helpers/error");
+const Product = require("../products/product.model");
+const Order = require("../orders/order.model");
+const Transaction = require("../transactions/transaction.model");
 const {
   buildCreditAggregationPipeline,
   convertToMonthlyDataArray,
-} = require('../helpers/utils');
+} = require("../helpers/utils");
 
 const getUserById = async (id) => {
   try {
     const data = await User.findById(id);
     return data;
   } catch (error) {
-    throw new ApiError(400, 'Unable to get user');
+    throw new ApiError(400, "Unable to get user");
   }
 };
 
@@ -34,7 +34,7 @@ const getUsers = async (criteria = {}) => {
     response.totalNumberOfPages = approximateNumber;
     return { response, rawData };
   } catch (error) {
-    throw new ApiError(400, 'Unable to get all users...');
+    throw new ApiError(400, "Unable to get all users...");
   }
 };
 const getAdminDashboardInfo = async () => {
@@ -43,15 +43,15 @@ const getAdminDashboardInfo = async () => {
   const numberOfOrders = await Order.count();
 
   const totalSales = await Transaction.aggregate([
-    { $match: { status: 'successful' } },
-    { $group: { _id: 'sales', totalSum: { $sum: '$amount' } } },
+    { $match: { status: "successful" } },
+    { $group: { _id: "sales", totalSum: { $sum: "$amount" } } },
   ]);
 
   return { numberOfProducts, numberOfOrders, totalSales };
 };
 
 const getRevenueMetrics = async () => {
-  const revenueFilter = { status: 'successful' };
+  const revenueFilter = { status: "successful" };
 
   let monthlyRevenue = await Transaction.aggregate(
     await buildCreditAggregationPipeline(revenueFilter)
@@ -59,7 +59,7 @@ const getRevenueMetrics = async () => {
   console.log(monthlyRevenue);
   let monthlyTransactionGraph = await convertToMonthlyDataArray(
     monthlyRevenue,
-    'totalAmount'
+    "totalAmount"
   );
   return monthlyTransactionGraph;
 };
