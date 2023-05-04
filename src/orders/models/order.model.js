@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { PAYMENT_STATUS, getEnumsArray } = require("../../helpers/enums");
 
 const { Schema } = mongoose;
 
@@ -6,7 +7,7 @@ const orderSchema = new Schema(
   {
     customer: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
+      ref: "User",
       trim: true,
     },
     date: {
@@ -27,7 +28,7 @@ const orderSchema = new Schema(
     },
     transactionId: {
       type: Schema.Types.ObjectId,
-      ref: 'Transaction',
+      ref: "Transaction",
     },
     description: {
       type: String,
@@ -51,8 +52,14 @@ const orderSchema = new Schema(
     deliveryStatus: {
       type: String,
       trim: true,
-      default: 'pending',
-      enum: ['pending', 'shipping', 'delivered', 'cancelled'],
+      default: "pending",
+      enum: ["pending", "shipping", "delivered", "cancelled"],
+    },
+    paymentStatus: {
+      type: String,
+      trim: true,
+      default: PAYMENT_STATUS.PENDING,
+      enum: [...getEnumsArray(PAYMENT_STATUS)],
     },
     items: [
       {
@@ -71,6 +78,6 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model("Order", orderSchema);
 
 module.exports = Order;

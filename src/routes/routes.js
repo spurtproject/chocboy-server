@@ -15,6 +15,8 @@ router.use("/category", require("../categories/category.routes"));
 
 // router.post('v2/payment/paystack/webhook', verifyPaymentStatus);
 
+router.use("/payment", require("../payment/payment.routes"));
+
 router.use("/discount", require("../coupons/discount/discount.routes"));
 
 router.use("/shipping", require("../coupons/shipping/shipping.routes"));

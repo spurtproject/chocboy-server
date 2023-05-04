@@ -1,6 +1,6 @@
 const Product = require("../../products/product.model");
 const { Order } = require("../../orders/models");
-const Transaction = require("../../transactions/transaction.model");
+const { Transaction } = require("../../payment/models");
 
 const getAdminDashboardInfo = async () => {
   const numberOfProducts = await Product.count();

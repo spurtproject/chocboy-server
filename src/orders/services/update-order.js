@@ -1,5 +1,5 @@
 const Order = require("../models");
-const Transaction = require("../../transactions/transaction.model");
+const { Transaction } = require("../../payment/models");
 const CouponUse = require("../../coupons/coupon-use.model");
 const Shipping = require("../../coupons/shipping/shipping.model");
 const { initiatePayment } = require("../../helpers/paystack");

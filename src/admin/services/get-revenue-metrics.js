@@ -1,4 +1,4 @@
-const Transaction = require("../../transactions/transaction.model");
+const { Transaction } = require("../../payment/models");
 const {
   buildCreditAggregationPipeline,
   convertToMonthlyDataArray,
