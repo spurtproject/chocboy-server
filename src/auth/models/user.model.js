@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const { getEnumsArray, USER_ROLE } = require('../helpers/enums');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const { getEnumsArray, USER_ROLE } = require("../../helpers/enums");
 const { Schema } = mongoose;
 
 const userSchema = new Schema(
@@ -45,11 +45,11 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.methods.isPasswordMatch = async function(password) {
+userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return await bcrypt.compare(password, user.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

@@ -1,52 +1,50 @@
-const { Router } = require('express');
-const { userAuthentication, adminAuthorization } = require('../helpers/auth');
+const { Router } = require("express");
+const { userAuthentication, adminAuthorization } = require("../helpers/auth");
 const router = Router();
-const { getCurrentUser } = require('../admin/admin.controller');
-const { verifyPaymentOrder, verifyPaymentStatus } = require('../orders/order.controller');
-const { getLocations } = require('../location/location.controller');
+const { getCurrentUser } = require("../admin/controllers");
+// const { verifyPaymentOrder, verifyPaymentStatus } = require('../orders/order.controller');
+const { getLocations } = require("../location/location.controller");
 
-router.use('/auth', require('../auth/auth.routes'));
+router.use("/auth", require("../auth/auth.routes"));
 
-router.use('/product', require('../products/product.routes'));
+router.use("/product", require("../products/product.routes"));
 
-router.use('/category', require('../categories/category.routes'));
+router.use("/category", require("../categories/category.routes"));
 
-router.post('/v1/payment/paystack/callback', verifyPaymentOrder);
+// router.post('/v1/payment/paystack/callback', verifyPaymentOrder);
 
-router.post('v2/payment/paystack/webhook', verifyPaymentStatus);
+// router.post('v2/payment/paystack/webhook', verifyPaymentStatus);
 
-router.use('/discount', require('../coupons/discount/discount.routes'));
+router.use("/payment", require("../payment/payment.routes"));
 
-router.use('/shipping', require('../coupons/shipping/shipping.routes'));
+router.use("/discount", require("../coupons/discount/discount.routes"));
 
-router.use('/cart', userAuthentication, require('../cart/cart.routes'));
+router.use("/shipping", require("../coupons/shipping/shipping.routes"));
 
-router.use('/order', userAuthentication, require('../orders/order.routes'));
+router.use("/cart", userAuthentication, require("../cart/cart.routes"));
 
-router.use('/user', userAuthentication, getCurrentUser);
+router.use("/order", userAuthentication, require("../orders/order.routes"));
 
-router.get('/location/all', getLocations);
+router.use("/user", userAuthentication, getCurrentUser);
 
-router.use('/blog', require('../blog/blog.routes'));
+router.get("/location/all", getLocations);
+
+router.use("/blog", require("../blog/blog.routes"));
+
+router.use("/coupon", userAuthentication, require("../coupons/coupon.routes"));
 
 router.use(
-  '/coupon',
+  "/location",
   userAuthentication,
-  require('../coupons/coupon.routes')
+  adminAuthorization,
+  require("../location/location.routes")
 );
 
 router.use(
-  '/location',
+  "/admin",
   userAuthentication,
   adminAuthorization,
-  require('../location/location.routes')
-);
-
-router.use(
-  '/admin',
-  userAuthentication,
-  adminAuthorization,
-  require('../admin/admin.routes')
+  require("../admin/admin.routes")
 );
 
 module.exports = router;
