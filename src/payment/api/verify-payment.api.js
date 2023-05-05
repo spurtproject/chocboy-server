@@ -2,7 +2,6 @@ const axios = require("axios");
 const { PAYSTACK_SECRET, PAYSTACK_VERIFY } = require("../../config/keys");
 
 const verifyPaymentApi = async (reference) => {
-  console.log(reference, "3");
   try {
     const secretKey = `Bearer ${PAYSTACK_SECRET}`;
     const headers = {
