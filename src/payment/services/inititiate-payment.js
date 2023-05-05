@@ -4,14 +4,15 @@ const saveTransaction = require("./save-transaction");
 
 const initiatePaymentService = async ({ amount, email, user_id }) => {
   const reference = v4();
+
   try {
     const response = await initiatePaymentApi({ email, amount, reference });
     const transaction = await saveTransaction({
       amount,
       customer: user_id,
-      reference,
+      transactionRef: reference,
     });
-    return { transaction, response };
+    return { transaction, paystackResponse: response };
   } catch (error) {
     throw error;
   }

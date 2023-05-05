@@ -18,7 +18,7 @@ const paymentSchema = new Schema(
     },
     status: {
       type: String,
-      required: true,
+      default: TRANSACTION_STATUS.PENDING,
       enum: [...getEnumsArray(TRANSACTION_STATUS)],
     },
     transactionRef: {

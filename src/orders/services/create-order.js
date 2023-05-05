@@ -1,4 +1,4 @@
-const Order = require("../models");
+const { Order } = require("../models");
 const Discount = require("../../coupons/discount/discount.model");
 const CouponUse = require("../../coupons/coupon-use.model");
 const moment = require("moment");
@@ -128,7 +128,15 @@ const createOrder = async (user, data) => {
         { numberOfTimesUsed: newNumberOfTimesUsed },
         { new: true }
       );
-      return { ...generateOrder, ...paystackResponse.data };
+      return {
+        customer: generateOrder.customer,
+        totalPrice: generateOrder.totalPrice,
+        transactionId: generateOrder.transactionId,
+        deliveryAmount: generateOrder.deliveryAmount,
+        deliveryStatus: generateOrder.deliveryStatus,
+        paymentStatus: generateOrder.paymentStatus,
+        ...paystackResponse.data,
+      };
     }
 
     const totalPrice = await data.reduce((prev, curr) => {
@@ -160,7 +168,15 @@ const createOrder = async (user, data) => {
 
     const generateOrder = await Order.create(rawData);
 
-    return generateOrder;
+    return {
+      customer: generateOrder.customer,
+      totalPrice: generateOrder.totalPrice,
+      transactionId: generateOrder.transactionId,
+      deliveryAmount: generateOrder.deliveryAmount,
+      deliveryStatus: generateOrder.deliveryStatus,
+      paymentStatus: generateOrder.paymentStatus,
+      ...paystackResponse.data,
+    };
   } catch (error) {
     throw error;
   }

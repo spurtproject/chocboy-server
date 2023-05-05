@@ -64,7 +64,8 @@ const orderSchema = new Schema(
     items: [
       {
         product: {
-          type: String,
+          type: Schema.Types.ObjectId,
+          ref: "Product",
         },
         choiceQuantity: {
           type: Number,
