@@ -1,5 +1,5 @@
-const paymentResponseService = require("../services/payment-response");
 const handleHttpError = require("../../helpers/http-error.handler");
+const { verifyPaymentService, paymentResponseService } = require("../services");
 
 class PaymentController {
   async verifyPayment(req, res) {

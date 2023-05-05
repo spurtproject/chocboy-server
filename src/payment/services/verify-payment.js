@@ -5,7 +5,7 @@ const verifyPaymentApi = require("../api/verify-payment.api");
 
 const verifyPaymentService = async (reference) => {
   try {
-    const result = verifyPaymentApi(reference);
+    const result = await verifyPaymentApi(reference);
     const transaction = await Transaction.findOne({
       transactionRef: reference,
     });
