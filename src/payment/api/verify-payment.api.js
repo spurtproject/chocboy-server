@@ -1,7 +1,8 @@
 const axios = require("axios");
-const { PAYSTACK_SECRET } = require("../../config/keys");
+const { PAYSTACK_SECRET, PAYSTACK_VERIFY } = require("../../config/keys");
 
 const verifyPaymentApi = async (reference) => {
+  console.log(reference, "3");
   try {
     const secretKey = `Bearer ${PAYSTACK_SECRET}`;
     const headers = {
@@ -10,15 +11,13 @@ const verifyPaymentApi = async (reference) => {
       "cache-control": "no-cache",
     };
 
-    const response = await axios.get(
-      `https://api.paystack.co/transaction/verify/${reference}`,
-      {
-        headers,
-      }
-    );
+    const response = await axios.get(`${PAYSTACK_VERIFY}${reference}`, {
+      headers,
+    });
 
     return response.data;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
