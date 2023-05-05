@@ -19,7 +19,7 @@ const verifyPaymentService = async (reference) => {
 
     return result;
   } catch (error) {
-    this.logger.error(error);
+    console.log(error);
     throw error;
   }
 };
