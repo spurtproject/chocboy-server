@@ -16,6 +16,7 @@ const verifyPaymentService = async (reference) => {
       transaction.status = payment.status = TRANSACTION_STATUS.SUCCESSFUL;
       order.paymentStatus = PAYMENT_STATUS.PAID;
     }
+
     return result;
   } catch (error) {
     this.logger.error(error);
