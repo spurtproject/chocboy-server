@@ -3,7 +3,7 @@ const orderService = require("../services");
 
 const generateOrder = async (req, res) => {
   try {
-    const data = await orderService.createOrder(req.user, req.body.data);
+    const data = await orderService.createOrder(req.user, req.body);
     res
       .status(201)
       .json({ status: "success", message: "Order now generated...", data });

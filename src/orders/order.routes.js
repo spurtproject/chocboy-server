@@ -8,9 +8,11 @@ const {
   generateWindowOrder,
 } = require("./controllers");
 const { adminAuthorization } = require("../helpers/auth");
+const validate = require("../helpers/validateRequest");
+const { createOrderDto } = require("./dto/create-order.dto");
 const router = Router();
 
-router.post("/generate", generateOrder);
+router.post("/generate", validate(createOrderDto), generateOrder);
 
 router.post("/window/generate", generateWindowOrder);
 

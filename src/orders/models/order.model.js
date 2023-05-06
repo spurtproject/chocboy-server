@@ -70,8 +70,8 @@ const orderSchema = new Schema(
         choiceQuantity: {
           type: Number,
         },
-        unitPrice: {
-          type: Number,
+        customField: {
+          type: String,
         },
       },
     ],
