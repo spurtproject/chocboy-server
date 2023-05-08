@@ -1,5 +1,5 @@
-const Joi = require('joi');
-const ApiError = require('./error');
+const Joi = require("joi");
+const ApiError = require("./error");
 
 const authSchema = Joi.object({
   name: Joi.string()
@@ -8,19 +8,25 @@ const authSchema = Joi.object({
     .required()
     .trim()
     .error(
-      new ApiError(400, 'Kindly input the name in the appropriate format...')
+      new ApiError(400, "Kindly input the name in the appropriate format...")
     ),
+  dateOfBirth: Joi.string().error(
+    new ApiError(400, "Kindly input the date in the appropriate format...")
+  ),
+  phone: Joi.string().error(
+    new ApiError(400, "Kindly input the name in the appropriate format...")
+  ),
   email: Joi.string()
     .email()
     .trim()
     .required()
-    .error(new ApiError(400, 'Oops! A valid email is actually required here!')),
+    .error(new ApiError(400, "Oops! A valid email is actually required here!")),
   password: Joi.string()
     .min(3)
     .max(30)
     .required()
     .trim()
-    .error(new ApiError(400, 'Kindly input a password you would remember...')),
+    .error(new ApiError(400, "Kindly input a password you would remember...")),
 });
 
 const authValidate = async (req, res, next) => {
@@ -42,7 +48,7 @@ const productSchema = Joi.object({
     .error(
       new ApiError(
         400,
-        'Kindly input the name of product in the appropriate format...'
+        "Kindly input the name of product in the appropriate format..."
       )
     ),
   category: Joi.string()
@@ -51,27 +57,27 @@ const productSchema = Joi.object({
     .error(
       new ApiError(
         400,
-        'Oops! A product must belong in atleast one category...'
+        "Oops! A product must belong in atleast one category..."
       )
     ),
   description: Joi.string()
     .min(3)
     .optional()
     .error(
-      new ApiError(400, 'Kindly input detailed description of this product')
+      new ApiError(400, "Kindly input detailed description of this product")
     ),
 
   quantity: Joi.number()
     .optional()
     .error(
-      new ApiError(400, 'Kindly indicate how many of this product is available')
+      new ApiError(400, "Kindly indicate how many of this product is available")
     ),
 
   price: Joi.number()
     .integer()
     .optional()
     .error(
-      new ApiError(400, 'Kindly input a valid integer as price of product')
+      new ApiError(400, "Kindly input a valid integer as price of product")
     ),
 });
 

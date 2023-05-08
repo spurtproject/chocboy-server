@@ -14,13 +14,16 @@ module.exports = (passport) => {
       },
       async (req, email, password, done) => {
         try {
+          const { name, dateOfBirth, phone } = req.body;
           let data = {};
           const transformedMail = email.toLowerCase();
           data.email = transformedMail;
           const hashedPassword = await bcrypt.hash(password, 10);
           data.password = hashedPassword;
-          data.name = req.body.name;
+          data.name = name;
           data.userRole = "user";
+          data.dateOfBirth = dateOfBirth;
+          data.phone = phone;
           const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
           data.userPin = code;
           const user = await User.create(data);
