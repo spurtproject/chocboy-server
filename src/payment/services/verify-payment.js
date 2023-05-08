@@ -17,6 +17,10 @@ const verifyPaymentService = async (reference) => {
       order.paymentStatus = PAYMENT_STATUS.PAID;
     }
 
+    await transaction.save();
+    await payment.save();
+    await order.save();
+
     return result;
   } catch (error) {
     console.log(error);
