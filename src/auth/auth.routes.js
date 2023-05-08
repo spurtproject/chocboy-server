@@ -8,6 +8,7 @@ const {
   changePassword,
   updatePassword,
   editProfile,
+  userProfile,
 } = require("./controllers");
 const { checkEmail } = require("../helpers/checkEmail");
 const { loginValidator } = require("../helpers/validate");
@@ -38,6 +39,8 @@ router.post("/login", loginValidator, login);
 router.put("/password/forgot", forgotPassword);
 
 router.post("/confirm/otp", userAuthentication, confirmOTP);
+
+router.get("/profile", userAuthentication, userProfile);
 
 router.put(
   "/edit/profile",

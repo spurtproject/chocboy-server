@@ -29,6 +29,10 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
+    state: {
+      type: String,
+      trim: true,
+    },
     userRole: {
       type: String,
       enums: [getEnumsArray(USER_ROLE)],

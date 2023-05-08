@@ -9,6 +9,7 @@ const {
   generateToken,
   expireUserToken,
 } = require("./token");
+const getUserProfile = require("./get-user-profile");
 
 module.exports = {
   editUserProfile,
@@ -20,4 +21,5 @@ module.exports = {
   generateAuthTokens,
   generateToken,
   expireUserToken,
+  getUserProfile,
 };

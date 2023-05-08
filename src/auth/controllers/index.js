@@ -6,6 +6,7 @@ const login = require("./login");
 const registerAdmin = require("./register-admin");
 const register = require("./register-user");
 const updatePassword = require("./update-password");
+const userProfile = require("./user-profile");
 
 module.exports = {
   changePassword,
@@ -16,4 +17,5 @@ module.exports = {
   registerAdmin,
   register,
   updatePassword,
+  userProfile,
 };
