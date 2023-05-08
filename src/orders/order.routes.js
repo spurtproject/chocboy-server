@@ -6,6 +6,7 @@ const {
   addDeliveryInfo,
   verifyPaymentOrder,
   generateWindowOrder,
+  orderStatus,
 } = require("./controllers");
 const { adminAuthorization, userAuthentication } = require("../helpers/auth");
 const validate = require("../helpers/validateRequest");
@@ -18,6 +19,7 @@ router.post("/window/generate", generateWindowOrder);
 
 router.get("/all", userAuthentication, getOrders);
 router.get("/:_id", getOrder);
+router.put("/status/:id", adminAuthorization, orderStatus);
 router.put("/delivery/info", addDeliveryInfo);
 
 module.exports = router;

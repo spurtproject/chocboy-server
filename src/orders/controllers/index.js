@@ -5,6 +5,7 @@ const getOrder = require("./get-order");
 const getOrders = require("./get-orders");
 const verifyPaymentOrder = require("./verify-payment-order");
 const verifyPaymentStatus = require("./verify-payment-status");
+const orderStatus = require("./order-status");
 
 module.exports = {
   generateOrder,
@@ -14,4 +15,5 @@ module.exports = {
   verifyPaymentStatus,
   addDeliveryInfo,
   generateWindowOrder,
+  orderStatus,
 };
