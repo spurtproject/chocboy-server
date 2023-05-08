@@ -1,13 +1,13 @@
-const Order = require("../models");
-const ApiError = require("../../helpers/error");
+const { Order } = require("../models");
 
 const getOrder = async (id) => {
   try {
     return await Order.findById(id)
       .populate("transactionId")
-      .populate("customer");
+      .populate("customer")
+      .populate("items.product");
   } catch (error) {
-    throw new ApiError(400, "Unable to get order");
+    throw error;
   }
 };
 

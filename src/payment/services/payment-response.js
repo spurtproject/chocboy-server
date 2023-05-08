@@ -33,8 +33,7 @@ const paymentResponseService = async (payload, paystack_hash) => {
 
     await transaction.save();
     await payment.save();
-    const p = await order.save();
-    console.log(p);
+    await order.save();
     return;
   } catch (error) {
     console.log(error);
