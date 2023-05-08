@@ -1,11 +1,15 @@
+const { PAYSTACK_SECRET } = require("../../config/keys");
 const ApiError = require("../../helpers/error");
 const verifyPaymentApi = require("../api/verify-payment.api");
+const crypto = require("crypto");
+const { Transaction, Payment } = require("../models");
+const { Order } = require("../../orders/models");
+const { TRANSACTION_STATUS, PAYMENT_STATUS } = require("../../helpers/enums");
 
 const paymentResponseService = async (payload, paystack_hash) => {
   try {
-    console.log(payload);
     const hash = crypto
-      .createHmac("sha512", PAYSTACK_SECRET_KEY)
+      .createHmac("sha512", PAYSTACK_SECRET)
       .update(JSON.stringify(payload))
       .digest("hex");
 
@@ -13,8 +17,7 @@ const paymentResponseService = async (payload, paystack_hash) => {
       throw new ApiError(401, "Incorrect hash");
     }
 
-    const result = verifyPaymentApi(payload.data.reference);
-    console.log(result);
+    const result = await verifyPaymentApi(payload.data.reference);
     const transaction = await Transaction.findOne({
       transactionRef: payload.data.reference,
     });
@@ -30,8 +33,11 @@ const paymentResponseService = async (payload, paystack_hash) => {
 
     await transaction.save();
     await payment.save();
-    await order.save();
+    const p = await order.save();
+    console.log(p);
+    return;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };

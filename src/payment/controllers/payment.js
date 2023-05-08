@@ -1,3 +1,4 @@
+const { body } = require("express-validator");
 const handleHttpError = require("../../helpers/http-error.handler");
 const { verifyPaymentService, paymentResponseService } = require("../services");
 
@@ -21,9 +22,6 @@ class PaymentController {
 
   async paymentResponse(req, res) {
     try {
-      if (!reference) {
-        throw new ApiError(400, "Reference is required");
-      }
       const result = await paymentResponseService(
         req.body,
         req.headers["x-paystack-signature"]

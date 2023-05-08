@@ -14,6 +14,7 @@ const getOrders = async (criteria = {}) => {
     const rawData = await Order.find()
       .populate("customer")
       .populate("transactionId")
+      .populate("product")
       .skip(_per_page * (_page - 1))
       .limit(_per_page);
     const nextPage = _page + 1;
