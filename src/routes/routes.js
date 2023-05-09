@@ -11,6 +11,8 @@ router.use("/product", require("../products/product.routes"));
 
 router.use("/category", require("../categories/category.routes"));
 
+router.use("/contact", require("../contact/contact.routes"));
+
 // router.post('/v1/payment/paystack/callback', verifyPaymentOrder);
 
 // router.post('v2/payment/paystack/webhook', verifyPaymentStatus);

@@ -1,12 +1,20 @@
 const { Order } = require("../models");
 const moment = require("moment");
 const { initiatePaymentService } = require("../../payment/services");
+const ApiError = require("../../helpers/error");
 
 const createOrder = async (user, data) => {
   const { items, productAmount, deliveryAmount, state, address, phone } = data;
   let totalItems = 0;
   try {
     // PAYSTCK gateway here
+    items.length &&
+      items.map((item) => {
+        if (!item.product) {
+          throw new ApiError(400, "Product field cannot be null");
+        }
+      });
+
     const date = moment().format("L");
 
     const totalPrice = productAmount + deliveryAmount;
