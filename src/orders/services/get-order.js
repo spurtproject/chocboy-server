@@ -5,7 +5,9 @@ const getOrder = async (id) => {
     return await Order.findById(id)
       .populate("transactionId")
       .populate("customer")
-      .populate("items.product");
+      .populate({
+        path: "items.product",
+      });
   } catch (error) {
     throw error;
   }
