@@ -2,13 +2,20 @@ const { Order } = require("../models");
 const moment = require("moment");
 const { initiatePaymentService } = require("../../payment/services");
 const ApiError = require("../../helpers/error");
+const Cart = require("../../cart/cart.model");
 
 const createOrder = async (user, data) => {
-  const { items, productAmount, deliveryAmount, state, address, phone } = data;
-  console.log(data);
+  const {
+    items,
+    productAmount,
+    deliveryAmount,
+    state,
+    address,
+    phone,
+    cart_id,
+  } = data;
   let totalItems = 0;
   try {
-    // PAYSTCK gateway here
     items.length &&
       items.map((item) => {
         if (!item.product) {
@@ -45,6 +52,8 @@ const createOrder = async (user, data) => {
     };
 
     const generateOrder = await Order.create(payload);
+
+    await Cart.deleteOne({ _id: cart_id });
 
     return {
       customer: generateOrder.customer,
