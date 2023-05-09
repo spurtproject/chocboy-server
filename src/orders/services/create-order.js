@@ -5,6 +5,7 @@ const ApiError = require("../../helpers/error");
 
 const createOrder = async (user, data) => {
   const { items, productAmount, deliveryAmount, state, address, phone } = data;
+  console.log(items);
   let totalItems = 0;
   try {
     // PAYSTCK gateway here
