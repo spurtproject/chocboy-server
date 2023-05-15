@@ -1,5 +1,5 @@
-const ApiError = require('../helpers/error');
-const Cart = require('./cart.model');
+const ApiError = require("../helpers/error");
+const Cart = require("./cart.model");
 
 const createCart = async (userId, data) => {
   const rawData = {};
@@ -10,7 +10,7 @@ const createCart = async (userId, data) => {
   if (checkCart) {
     throw new ApiError(
       400,
-      'You already have a cart to your name on this platform'
+      "You already have a cart to your name on this platform"
     );
   }
 
@@ -19,9 +19,11 @@ const createCart = async (userId, data) => {
 
 const getCart = async (userId) => {
   try {
-    return await Cart.findOne({ customer: userId });
+    return await Cart.findOne({ customer: userId }).populate({
+      path: "items.product",
+    });
   } catch (error) {
-    throw new ApiError(400, 'Unable to retrieve cart');
+    throw new ApiError(400, "Unable to retrieve cart");
   }
 };
 
@@ -35,8 +37,8 @@ const updateCart = async (userId, data) => {
 
 const editCartItem = async (userId, data, productId) => {
   return await Cart.findOneAndUpdate(
-    { 'items._id': productId },
-    { $set: { 'items.$': data } },
+    { "items._id": productId },
+    { $set: { "items.$": data } },
     { new: true }
   );
 };
