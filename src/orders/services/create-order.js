@@ -12,7 +12,7 @@ const createOrder = async (user, data) => {
     state,
     address,
     phone,
-    cart_id,
+    cartId,
   } = data;
   let totalItems = 0;
   try {
@@ -53,7 +53,7 @@ const createOrder = async (user, data) => {
 
     const generateOrder = await Order.create(payload);
 
-    await Cart.deleteOne({ _id: cart_id });
+    await Cart.deleteOne({ _id: cartId });
 
     return {
       customer: generateOrder.customer,

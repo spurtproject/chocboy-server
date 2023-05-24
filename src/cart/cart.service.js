@@ -35,18 +35,30 @@ const updateCart = async (userId, data) => {
   return await cartItems.save();
 };
 
-const editCartItem = async (userId, data, productId) => {
-  return await Cart.findOneAndUpdate(
-    { "items._id": productId },
-    { $set: { "items.$": data } },
-    { new: true }
-  );
+const editCartItem = async (userId, data, itemId) => {
+  try {
+    const updatedCart = await Cart.findOneAndUpdate(
+      { customer: userId, "items._id": itemId },
+      {
+        $set: {
+          "items.$.product": data.product,
+          "items.$.choiceQuantity": data.choiceQuantity,
+          "items.$.unitPrice": data.unitPrice,
+          "items.$.productImage": data.productImage,
+        },
+      },
+      { new: true }
+    );
+    return updatedCart;
+  } catch (error) {
+    throw error;
+  }
 };
 
-const deleteCartItem = async (userId, productId) => {
+const deleteCartItem = async (userId, itemId) => {
   return await Cart.findOneAndUpdate(
     { customer: userId },
-    { $pull: { items: { _id: productId } } },
+    { $pull: { items: { _id: itemId } } },
     { new: true }
   );
 };
