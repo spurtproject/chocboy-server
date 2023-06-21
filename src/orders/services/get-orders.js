@@ -7,6 +7,7 @@ const getOrders = async (query, customer) => {
 
     const orderCount = await Order.count({ customer });
     const orders = await Order.find({ customer })
+      .sort({ _id: -1 })
       .populate("customer")
       .populate("transactionId")
       .populate("items.product")

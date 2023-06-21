@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 module.exports = {
   //   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || 3000,
@@ -18,4 +18,7 @@ module.exports = {
   PAYSTACK_SECRET: process.env.PAYSTACK_SECRET,
   PAYSTACK_INITIALIZE: process.env.PAYSTACK_INITIALIZE,
   PAYSTACK_VERIFY: process.env.PAYSTACK_VERIFY,
+  PAYSTACK_ORDER_CALLBACK_URL: process.env.PAYSTACK_ORDER_CALLBACK_URL,
+  PAYSTACK_CUSTOM_ORDER_CALLBACK_URL:
+    process.env.PAYSTACK_CUSTOM_ORDER_CALLBACK_URL,
 };

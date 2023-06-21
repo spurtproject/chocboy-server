@@ -7,6 +7,7 @@ const getAllOrders = async (query) => {
 
     const orderCount = await CustomOrder.count({});
     const orders = await CustomOrder.find({})
+      .sort({ _id: -1 })
       .populate("customer")
       .populate("transactionId")
       .skip(skip)

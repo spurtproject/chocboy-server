@@ -1,7 +1,12 @@
 const { PAYSTACK_SECRET, PAYSTACK_INITIALIZE } = require("../../config/keys");
 const axios = require("axios");
 
-const initiatePaymentApi = async ({ email, amount, reference }) => {
+const initiatePaymentApi = async ({
+  email,
+  amount,
+  reference,
+  callback_url,
+}) => {
   try {
     const secretKey = `Bearer ${PAYSTACK_SECRET}`;
     const headers = {
@@ -13,6 +18,7 @@ const initiatePaymentApi = async ({ email, amount, reference }) => {
       email,
       amount: amount * 100,
       reference,
+      callback_url,
     };
 
     const response = await axios.post(PAYSTACK_INITIALIZE, data, {

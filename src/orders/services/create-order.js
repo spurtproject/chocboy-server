@@ -3,6 +3,7 @@ const moment = require("moment");
 const { initiatePaymentService } = require("../../payment/services");
 const ApiError = require("../../helpers/error");
 const Cart = require("../../cart/cart.model");
+const { PAYSTACK_ORDER_CALLBACK_URL } = require("../../config/keys");
 
 const createOrder = async (user, data) => {
   const {
@@ -36,6 +37,7 @@ const createOrder = async (user, data) => {
       amount,
       email: user.email,
       user_id: user._id,
+      callback_url: PAYSTACK_ORDER_CALLBACK_URL,
     });
 
     const payload = {

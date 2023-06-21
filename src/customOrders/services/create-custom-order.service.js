@@ -1,6 +1,7 @@
 const moment = require("moment");
 const { initiatePaymentService } = require("../../payment/services");
 const { CustomOrder } = require("../models");
+const { PAYSTACK_CUSTOM_ORDER_CALLBACK_URL } = require("../../config/keys");
 
 const createCustomOrder = async (user, data) => {
   const { chocolateSize, chocolateType, amount, deliveryInformation } = data;
@@ -13,6 +14,7 @@ const createCustomOrder = async (user, data) => {
       amount: chargedAmount,
       email: user.email,
       user_id: user._id,
+      callback_url: PAYSTACK_CUSTOM_ORDER_CALLBACK_URL,
     });
 
     const payload = {
