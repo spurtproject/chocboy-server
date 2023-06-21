@@ -11,6 +11,9 @@ const verifyPaymentService = async (reference) => {
     });
     const payment = await Payment.findOne({ transactionRef: reference });
     const order = await Order.findOne({ transactionId: transaction._id });
+    if (!order) {
+      order = await CustomOrder.findOne({ transactionId: transaction._id });
+    }
 
     if (result.data.status == "success") {
       transaction.status = payment.status = TRANSACTION_STATUS.SUCCESSFUL;

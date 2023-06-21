@@ -1,5 +1,5 @@
-const { Router } = require('express');
-const { userAuthentication, adminAuthorization } = require('../helpers/auth');
+const { Router } = require("express");
+const { userAuthentication, adminAuthorization } = require("../helpers/auth");
 
 const {
   createBlog,
@@ -8,35 +8,38 @@ const {
   getBlog,
   getBlogs,
   publishBlog,
-} = require('./blog.controllers');
+  getBlogWithSlug,
+} = require("./blog.controllers");
 
-const upload = require('../helpers/multer');
+const upload = require("../helpers/multer");
 const router = Router();
 
 router.post(
-  '/create',
+  "/create",
   userAuthentication,
   adminAuthorization,
-  upload.single('photo'),
+  upload.single("photo"),
   createBlog
 );
 
-router.get('/all', getBlogs);
+router.get("/all", getBlogs);
 
-router.get('/:_id', getBlog);
+router.get("/:_id", getBlog);
 
-router.patch('/publish', userAuthentication, adminAuthorization, publishBlog);
+router.get("/single/:slug", getBlogWithSlug);
+
+router.patch("/publish", userAuthentication, adminAuthorization, publishBlog);
 
 router.put(
-  '/edit',
+  "/edit",
   userAuthentication,
   adminAuthorization,
-  upload.single('photo'),
+  upload.single("photo"),
   editBlog
 );
 
 router.delete(
-  '/delete/:_id',
+  "/delete/:_id",
   userAuthentication,
   adminAuthorization,
   deleteBlog

@@ -1,6 +1,6 @@
-const blogService = require('./blog.service');
-const cloudinary = require('../helpers/cloudinary');
-const catchAsync = require('express-async-handler');
+const blogService = require("./blog.service");
+const cloudinary = require("../helpers/cloudinary");
+const catchAsync = require("express-async-handler");
 
 const createBlog = catchAsync(async (req, res) => {
   const requestBody = req.body;
@@ -11,21 +11,28 @@ const createBlog = catchAsync(async (req, res) => {
   const data = await blogService.createBlog(requestBody);
   res
     .status(201)
-    .json({ status: 'success', message: 'Blog successfully drafted...', data });
+    .json({ status: "success", message: "Blog successfully drafted...", data });
 });
 
 const getBlog = catchAsync(async (req, res) => {
   const data = await blogService.getBlog(req.params._id);
   res
     .status(200)
-    .json({ status: true, message: 'Blog successfully retrieved...', data });
+    .json({ status: true, message: "Blog successfully retrieved...", data });
+});
+
+const getBlogWithSlug = catchAsync(async (req, res) => {
+  const data = await blogService.getBlogWithSlug(req.params.slug);
+  res
+    .status(200)
+    .json({ status: true, message: "Blog successfully retrieved...", data });
 });
 
 const getBlogs = async (req, res) => {
   const data = await blogService.getBlogs(req.query);
   res
     .status(201)
-    .json({ status: 'success', message: 'All blogs now retrieved...', data });
+    .json({ status: "success", message: "All blogs now retrieved...", data });
 };
 
 const editBlog = async (req, res) => {
@@ -37,7 +44,7 @@ const editBlog = async (req, res) => {
   const data = await blogService.editBlog(req.query.blogId, updatedbody);
   res
     .status(200)
-    .json({ status: 'success', message: 'Blog successfully updated...', data });
+    .json({ status: "success", message: "Blog successfully updated...", data });
 };
 
 const publishBlog = catchAsync(async (req, res) => {
@@ -65,4 +72,5 @@ module.exports = {
   getBlog,
   getBlogs,
   publishBlog,
+  getBlogWithSlug,
 };

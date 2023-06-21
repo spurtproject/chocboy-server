@@ -27,6 +27,8 @@ router.use("/cart", userAuthentication, require("../cart/cart.routes"));
 
 router.use("/order", userAuthentication, require("../orders/order.routes"));
 
+router.use("/custom-order", require("../customOrders/custom-orders.routes"));
+
 router.use("/user", userAuthentication, getCurrentUser);
 
 router.get("/location/all", getLocations);

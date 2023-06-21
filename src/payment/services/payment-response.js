@@ -4,6 +4,7 @@ const verifyPaymentApi = require("../api/verify-payment.api");
 const crypto = require("crypto");
 const { Transaction, Payment } = require("../models");
 const { Order } = require("../../orders/models");
+const { CustomOrder } = require("../../customOrders/models");
 const { TRANSACTION_STATUS, PAYMENT_STATUS } = require("../../helpers/enums");
 
 const paymentResponseService = async (payload, paystack_hash) => {
@@ -24,7 +25,11 @@ const paymentResponseService = async (payload, paystack_hash) => {
     const payment = await Payment.findOne({
       transactionRef: payload.data.reference,
     });
-    const order = await Order.findOne({ transactionId: transaction._id });
+    let order = await Order.findOne({ transactionId: transaction._id });
+
+    if (!order) {
+      order = await CustomOrder.findOne({ transactionId: transaction._id });
+    }
 
     if (result.data.status == "success") {
       transaction.status = payment.status = TRANSACTION_STATUS.SUCCESSFUL;

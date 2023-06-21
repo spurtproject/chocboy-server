@@ -1,18 +1,30 @@
-const Blog = require('./blog.model');
-const moment = require('moment');
+const Blog = require("./blog.model");
+const moment = require("moment");
+const getSlug = require("./function");
+const ApiError = require("../helpers/error");
 
 const createBlog = async (data) => {
-  const rawData = data;
-  if (!rawData.state) {
-    rawData.state = 'draft';
-  }
-  const count = data.body.split(' ').length;
-  const avg = 200;
-  const counted = count / avg;
-  const maincount = Math.ceil(counted);
-  rawData.reading_time = `${maincount} min read.`;
+  try {
+    const rawData = data;
+    rawData.slug = getSlug(rawData.title);
+    const blog = await Blog.findOne({ slug: rawData.slug });
 
-  return await Blog.create(rawData);
+    if (blog) {
+      throw new ApiError(409, "A blog with this title already exists");
+    }
+    if (!rawData.state) {
+      rawData.state = "draft";
+    }
+    const count = data.body.split(" ").length;
+    const avg = 200;
+    const counted = count / avg;
+    const maincount = Math.ceil(counted);
+    rawData.reading_time = `${maincount} min read.`;
+
+    return await Blog.create(rawData);
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getBlog = async (blogId) => {
@@ -23,6 +35,11 @@ const getBlog = async (blogId) => {
     { read_count: readCountIncrement },
     { new: true }
   );
+};
+
+const getBlogWithSlug = async (slug) => {
+  const blog = await Blog.findOne({ slug });
+  return blog;
 };
 
 const getBlogs = async (criteria = {}) => {
@@ -48,7 +65,7 @@ const editBlog = async (blogId, data) => {
 const publishBlog = async (blogId) => {
   return await Blog.findByIdAndUpdate(
     blogId,
-    { state: 'published' },
+    { state: "published" },
     { new: true }
   );
 };
@@ -64,4 +81,5 @@ module.exports = {
   getBlog,
   getBlogs,
   publishBlog,
+  getBlogWithSlug,
 };
