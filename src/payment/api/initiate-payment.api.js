@@ -11,7 +11,7 @@ const initiatePaymentApi = async ({ email, amount, reference }) => {
     };
     const data = {
       email,
-      amount,
+      amount: amount * 100,
       reference,
     };
 

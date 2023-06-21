@@ -31,7 +31,7 @@ const createOrder = async (user, data) => {
       totalItems += item.choiceQuantity;
     });
 
-    const amount = totalPrice * 100;
+    const amount = totalPrice;
     const { transaction, paystackResponse } = await initiatePaymentService({
       amount,
       email: user.email,

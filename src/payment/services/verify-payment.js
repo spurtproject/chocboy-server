@@ -2,6 +2,7 @@ const { Transaction, Payment } = require("../models");
 const { Order } = require("../../orders/models");
 const { TRANSACTION_STATUS, PAYMENT_STATUS } = require("../../helpers/enums");
 const verifyPaymentApi = require("../api/verify-payment.api");
+const { CustomOrder } = require("../../customOrders/models");
 
 const verifyPaymentService = async (reference) => {
   try {

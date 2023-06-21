@@ -35,6 +35,10 @@ router.get("/location/all", getLocations);
 
 router.use("/blog", require("../blog/blog.routes"));
 
+router.use("/vendor", require("../vendor/vendor.routes"));
+
+router.use("/treasure", require("../treasureHunt/treasure.routes"));
+
 router.use("/coupon", userAuthentication, require("../coupons/coupon.routes"));
 
 router.use(

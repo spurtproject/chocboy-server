@@ -8,7 +8,7 @@ const createCustomOrder = async (user, data) => {
   try {
     const date = moment().format("L");
 
-    const chargedAmount = amount * 100;
+    const chargedAmount = amount;
     const { transaction, paystackResponse } = await initiatePaymentService({
       amount: chargedAmount,
       email: user.email,

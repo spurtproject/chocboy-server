@@ -54,7 +54,7 @@ const customOrderSchema = new Schema(
       city: {
         type: String,
       },
-      country: {
+      email: {
         type: String,
       },
       additionalInfo: {

@@ -19,7 +19,7 @@ const createCustomOrderDto = object().shape({
         phoneNumber: string().required("Phone number is required"),
         state: string().required("State is required"),
         city: string().required("City is required"),
-        country: string().required("Country is required"),
+        email: string().email().required("Country is required"),
         additionalInfo: string().optional(),
       })
       .required("Delivery Information is required"),
