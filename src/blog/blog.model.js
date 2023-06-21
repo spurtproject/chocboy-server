@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { BLOG_CLASS, getEnumsArray } = require("../helpers/enums");
 
 const { Schema } = mongoose;
 
@@ -10,6 +11,11 @@ const blogSchema = new Schema(
     },
     slug: {
       type: String,
+    },
+    category: {
+      type: String,
+      default: BLOG_CLASS.ARTICLE,
+      enum: [...getEnumsArray(BLOG_CLASS)],
     },
     description: {
       type: String,

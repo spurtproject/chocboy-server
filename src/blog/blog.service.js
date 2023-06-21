@@ -6,11 +6,10 @@ const ApiError = require("../helpers/error");
 const createBlog = async (data) => {
   try {
     const rawData = data;
-    rawData.slug = getSlug(rawData.title);
     const blog = await Blog.findOne({ slug: rawData.slug });
 
     if (blog) {
-      throw new ApiError(409, "A blog with this title already exists");
+      throw new ApiError(409, "A blog with this slug already exists");
     }
     if (!rawData.state) {
       rawData.state = "draft";
@@ -44,13 +43,18 @@ const getBlogWithSlug = async (slug) => {
 
 const getBlogs = async (criteria = {}) => {
   let response = {};
-  const { page, per_page } = criteria;
+  const { page, per_page, category } = criteria;
+  const query = {};
+
+  if (category) {
+    query.category = category;
+  }
   const _page = parseInt(page, 10);
   const _per_page = parseInt(per_page, 10) || 10;
-  const blogCount = await Blog.count();
+  const blogCount = await Blog.count(query);
   const totalNumberOfPages = blogCount / 10;
   const approximateNumber = Math.ceil(totalNumberOfPages);
-  const rawData = await Blog.find()
+  const rawData = await Blog.find(query)
     .skip(_per_page * (_page - 1))
     .limit(_per_page);
   response.currentPage = _page;

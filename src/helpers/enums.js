@@ -19,10 +19,16 @@ const PAYMENT_STATUS = Object.freeze({
   PAID: "paid",
 });
 
+const BLOG_CLASS = Object.freeze({
+  ARTICLE: "article",
+  RECIPE: "recipe",
+});
+
 module.exports = {
   USER_ROLE,
   TRANSACTION_STATUS,
   getEnumsArray,
   PLATFORM,
   PAYMENT_STATUS,
+  BLOG_CLASS,
 };
