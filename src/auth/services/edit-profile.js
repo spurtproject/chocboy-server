@@ -15,7 +15,9 @@ const editUserProfile = async (userId, data) => {
       );
     }
 
-    const { name, email, phone, state, address, dateOfBirth, photo } = data;
+    console.log(data.gender);
+
+    const { email } = data;
 
     if (email) {
       const confirm = await User.findOne({ email });

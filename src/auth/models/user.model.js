@@ -41,6 +41,10 @@ const userSchema = new Schema(
       type: String,
       trim: true,
     },
+    gender: {
+      type: String,
+      trim: true,
+    },
     password: {
       type: String,
       trim: true,
