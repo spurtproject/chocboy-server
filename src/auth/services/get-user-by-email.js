@@ -10,10 +10,7 @@ const getUserByMail = async (email) => {
 
     return JSON.parse(JSON.stringify(user));
   } catch (err) {
-    throw new ApiError(
-      400,
-      "Oops! You are yet to be registered with this mail..."
-    );
+    throw err;
   }
 };
 

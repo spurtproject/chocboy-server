@@ -7,7 +7,7 @@ const router = Router();
 
 router.post(
   "/create",
-  userAuthentication,
+  // userAuthentication,
   validate(createTreasureDto),
   createTreasure
 );
