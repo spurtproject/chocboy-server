@@ -5,6 +5,7 @@ function handleUserResponse(user) {
     email: user.email,
     userPin: user.userPin,
     dateOfBirth: user.dateOfBirth,
+    gender: user.gender,
     phone: user.phone,
     address: user.address,
     state: user.state,
