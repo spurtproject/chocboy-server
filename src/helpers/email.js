@@ -45,4 +45,68 @@ async function sendOTP(userMail, userPin) {
   }
 }
 
-module.exports = { sendOTP };
+async function sendTreasureHuntMessage(userMail, userName) {
+  const subject_matter = "Treasure Hunt";
+  const email = {
+    body: {
+      greeting: `Dear ${userName}`,
+      intro: [``],
+
+      action: {
+        instructions: `Thank you for choosing to participate in the upcoming Treasure Hunt. \nWe can't wait to see you there and share in the adventure of the Treasure Hunt! `,
+        button: {
+          color: "",
+          text: "",
+          link: "",
+        },
+      },
+      outro: "",
+    },
+  };
+  try {
+    const msg = {
+      to: userMail,
+      from: CHOCBOY_SENDER_EMAIL,
+      subject: subject_matter,
+      html: mailGenerator.generate(email),
+    };
+    await mail.sendEmail(msg);
+  } catch (error) {
+    console.error("Error sending email:", error.message);
+    throw error;
+  }
+}
+
+async function sendVendorMessage(userMail, userName) {
+  const subject_matter = "Vendor Signup ";
+  const email = {
+    body: {
+      greeting: `Dear ${userName}`,
+      intro: [``],
+
+      action: {
+        instructions: `We are excited to inform you that your vendor signup has been successfully processed and approved!. \n Welcome to our platform as a valued vendor partner!`,
+        button: {
+          color: "",
+          text: "",
+          link: "",
+        },
+      },
+      outro: "",
+    },
+  };
+  try {
+    const msg = {
+      to: userMail,
+      from: CHOCBOY_SENDER_EMAIL,
+      subject: subject_matter,
+      html: mailGenerator.generate(email),
+    };
+    await mail.sendEmail(msg);
+  } catch (error) {
+    console.error("Error sending email:", error.message);
+    throw error;
+  }
+}
+
+module.exports = { sendOTP, sendTreasureHuntMessage, sendVendorMessage };

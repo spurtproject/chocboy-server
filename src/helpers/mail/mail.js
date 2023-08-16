@@ -22,7 +22,6 @@ class Mailer {
       await this.setTransporter();
     }
     const response = await this.transporter.sendMail(mail);
-    console.log(response);
     return response;
   }
 
