@@ -109,4 +109,44 @@ async function sendVendorMessage(userMail, userName) {
   }
 }
 
-module.exports = { sendOTP, sendTreasureHuntMessage, sendVendorMessage };
+async function signUpMessage(userMail, userName) {
+  console.log(userMail, userName);
+  const subject_matter = "Website Signup ";
+  const email = {
+    body: {
+      greeting: `Dear ${userName}`,
+      intro: [
+        `Welcome to Chocboy! Thank you for joining the best chocolate team!.\n We can't wait for you to experience our delicious and personalized box of goods and recipes at our store. `,
+      ],
+
+      action: {
+        instructions: `If you encounter any issue please feel free to reach out to us at info@chocboy.com`,
+        button: {
+          color: "",
+          text: "",
+          link: "",
+        },
+      },
+      outro: "Chocboy, Anytime is Chocolate Time!",
+    },
+  };
+  try {
+    const msg = {
+      to: userMail,
+      from: CHOCBOY_SENDER_EMAIL,
+      subject: subject_matter,
+      html: mailGenerator.generate(email),
+    };
+    await mail.sendEmail(msg);
+  } catch (error) {
+    console.error("Error sending email:", error.message);
+    throw error;
+  }
+}
+
+module.exports = {
+  sendOTP,
+  sendTreasureHuntMessage,
+  sendVendorMessage,
+  signUpMessage,
+};
